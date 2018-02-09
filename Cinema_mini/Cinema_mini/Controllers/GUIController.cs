@@ -13,5 +13,9 @@ namespace Cinema_mini.Controllers
         {
             return View();
         }
+        public ViewResult Main()
+        {
+            return View();
+        }
     }
 }

@@ -1,29 +1,14 @@
 ﻿$(document).ready(function () {
-    $('.login-wrapper').ready(function(){
-        $('.login-form').submit(function(){
-            window.location.href = window.location.href+"/../";
-            return false;
+    $('#btn_login').click(function () {
+        var usrname = $('#username').val();
+        var password = $('#password').val();
+        $.ajax({
+            url: "GUI/Main/",
+            type: "post",
+            data: { "urs": usrname, "pass": password },
+            success: function (result) {
+                window.location.href = "GUI/Main/";
+            }
         });
-        $('.signup-form').submit(function(){
-            return false;
-        });
-        $('.pass-forgot-form').submit(function(){
-            return false;
-        });
-    });
-    $('.btn-forgot-password').click(function(ev){
-        var $form = $(this).closest('form');
-        $form.removeClass('visible');
-        $form.parent().find('.pass-forgot-form').addClass('visible');
-    });
-    $('.btn-sign-in').click(function(){
-        var $form = $(this).closest('form');
-        $form.removeClass('visible');
-        $form.parent().find('.login-form').addClass('visible');
-    });
-    $('.btn-sign-up').click(function(){
-        var $form = $(this).closest('form');
-        $form.removeClass('visible');
-        $form.parent().find('.signup-form').addClass('visible');
     });
 });
