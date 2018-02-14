@@ -12,9 +12,12 @@ namespace Cinema_mini.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cinema_Film_TypeFilm
+    public partial class Cinema_TrackingLogin
     {
-        public int id_film { get; set; }
-        public int id_type_film { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public System.DateTime time_created { get; set; }
+        public System.DateTime duration_expired { get; set; }
+        public string username { get; set; }
     }
 }

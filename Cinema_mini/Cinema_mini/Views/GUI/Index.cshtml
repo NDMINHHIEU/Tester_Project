@@ -11,14 +11,15 @@
     });
 </script>
 <div class="login-wrapper fadeInDown animated">
-    <form class="lobi-form login-form visible">
+    <form id="login_form" class="lobi-form login-form visible">
         <div class="login-header">
             Đăng nhập
         </div>
         <div class="login-body no-padding">
             <fieldset>
                 <div class="form-group">
-                    <label>Username</label>
+                    <label class="float-left">Username</label>
+                    <label id="validate_user" class="float-right" style="display:none">Vui lòng nhập tài khoản</label>
                     <label class="input">
                         <span class="input-icon input-icon-prepend fa fa-user"></span>
                         <input type="text" id="username" name="username" placeholder="Username">
@@ -35,13 +36,9 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
-                        <label class="checkbox lobicheck lobicheck-info lobicheck-inversed lobicheck-lg">
-                            <input type="checkbox" name="remember_me" value="0">
-                            <i></i> Remember me
-                        </label>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="btn_login" class="btn btn-info btn-block"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+                        <button type="submit" id="btn_login" class="btn btn-info btn-block"><span class="glyphicon glyphicon-log-in"></span> Login</button>
                     </div>
                 </div>
             </fieldset>

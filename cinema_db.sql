@@ -1,7 +1,7 @@
 USE [master]
 GO
 
-/****** Object:  Database [Cinema]    Script Date: 02/10/2018 21:56:41 ******/
+/****** Object:  Database [Cinema]    Script Date: 02/14/2018 10:36:02 ******/
 CREATE DATABASE [Cinema] ON  PRIMARY 
 ( NAME = N'Cinema', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10.MSSQLSERVER\MSSQL\DATA\Cinema.mdf' , SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 

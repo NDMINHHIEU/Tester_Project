@@ -80,6 +80,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -224,9 +227,6 @@
     <Compile Include="Models\Cinema_Film.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cinema_Film_TypeFilm.cs">
-      <DependentUpon>Cinema.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Cinema_Popcorn.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
@@ -240,6 +240,9 @@
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cinema_Ticket.cs">
+      <DependentUpon>Cinema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cinema_TrackingLogin.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cinema_TypeFilm.cs">
@@ -266,6 +269,7 @@
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Services_1.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2530,13 +2534,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\Cinema.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Cinema.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Cinema.edmx.diagram">
-      <DependentUpon>Cinema.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\lobi\BOOTSTRAP\dist\css\bootstrap-theme.css.map" />
     <Content Include="Content\lobi\BOOTSTRAP\dist\css\bootstrap.css.map" />
     <Content Include="Content\lobi\BOOTSTRAP\dist\fonts\glyphicons-halflings-regular.eot" />
@@ -4009,6 +4006,13 @@
     <Content Include="Content\lobi\sound\lobibox\sound6.ogg" />
     <Content Include="Content\demo.less" />
     <Content Include="Views\Shared\Master.cshtml" />
+    <EntityDeploy Include="Models\Cinema.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Cinema.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Cinema.edmx.diagram">
+      <DependentUpon>Cinema.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -4053,6 +4057,8 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\GUI\Index.cshtml" />
     <Content Include="Views\GUI\Main.cshtml" />
+    <Content Include="Views\Shared\Master_Admin_Page.cshtml" />
+    <Content Include="Views\GUI\Show_error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,7 +14,16 @@ namespace Cinema_mini.Models
     
     public partial class Cinema_Type_Staff
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cinema_Type_Staff()
+        {
+            this.Cinema_Staff = new HashSet<Cinema_Staff>();
+        }
+    
         public int id_type_staff { get; set; }
         public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cinema_Staff> Cinema_Staff { get; set; }
     }
 }

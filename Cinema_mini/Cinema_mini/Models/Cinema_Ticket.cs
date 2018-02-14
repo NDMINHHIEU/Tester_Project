@@ -20,5 +20,10 @@ namespace Cinema_mini.Models
         public int id_user { get; set; }
         public int id_type_tick { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
+    
+        public virtual Cinema_Room Cinema_Room { get; set; }
+        public virtual Cinema_Showtime Cinema_Showtime { get; set; }
+        public virtual Cinema_TypeTick Cinema_TypeTick { get; set; }
+        public virtual Cinema_User Cinema_User { get; set; }
     }
 }

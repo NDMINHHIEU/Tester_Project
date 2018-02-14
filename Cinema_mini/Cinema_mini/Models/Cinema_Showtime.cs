@@ -14,9 +14,18 @@ namespace Cinema_mini.Models
     
     public partial class Cinema_Showtime
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cinema_Showtime()
+        {
+            this.Cinema_Ticket = new HashSet<Cinema_Ticket>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public System.TimeSpan start { get; set; }
         public System.TimeSpan end { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cinema_Ticket> Cinema_Ticket { get; set; }
     }
 }

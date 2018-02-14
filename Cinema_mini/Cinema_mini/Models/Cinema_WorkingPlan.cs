@@ -15,10 +15,12 @@ namespace Cinema_mini.Models
     public partial class Cinema_WorkingPlan
     {
         public int id { get; set; }
-        public int id_staff { get; set; }
+        public int id_nv { get; set; }
         public int check_in { get; set; }
         public int check_out { get; set; }
         public int actual_wkd { get; set; }
         public int standard_salary { get; set; }
+    
+        public virtual Cinema_Staff Cinema_Staff { get; set; }
     }
 }
