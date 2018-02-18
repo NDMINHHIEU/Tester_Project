@@ -11,15 +11,17 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="description" Type="text" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="Cinema_Film_TypeFilm">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Cinema_FilmTypeFilm">
           <Key>
             <PropertyRef Name="id_film" />
-            <PropertyRef Name="id_type_film" />
+            <PropertyRef Name="id_typefilm" />
           </Key>
           <Property Name="id_film" Type="int" Nullable="false" />
-          <Property Name="id_type_film" Type="int" Nullable="false" />
+          <Property Name="id_typefilm" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_Popcorn">
           <Key>
@@ -28,7 +30,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ammount" Type="int" Nullable="false" />
-          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_Room">
           <Key>
@@ -55,8 +57,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="type_staff" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="phone" Type="int" />
-          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="phone" Type="int" Nullable="false" />
+          <Property Name="address" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_Ticket">
           <Key>
@@ -73,6 +75,16 @@
           <Property Name="id_type_tick" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="Cinema_TrackingLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="time_created" Type="datetime" Nullable="false" />
+          <Property Name="duration_expired" Type="datetime" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cinema_Type_Staff">
           <Key>
             <PropertyRef Name="id_type_staff" />
@@ -86,7 +98,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_TypeTick">
           <Key>
@@ -94,18 +106,8 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="discount" Type="float" />
+          <Property Name="discount" Type="float" Nullable="false" />
           <Property Name="prize" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Cinema_TrackingLogin">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="time_created" Type="datetime" Nullable="false" />
-          <Property Name="duration_expired" Type="datetime" Nullable="false" />
-          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_User">
           <Key>
@@ -144,27 +146,27 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_Cinema_Film_TypeFilm_Cinema_Film">
+        <Association Name="FK_Cinema_FilmTypeFilm_Cinema_Film">
           <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="1" />
-          <End Role="Cinema_Film_TypeFilm" Type="Self.Cinema_Film_TypeFilm" Multiplicity="*" />
+          <End Role="Cinema_FilmTypeFilm" Type="Self.Cinema_FilmTypeFilm" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cinema_Film">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Cinema_Film_TypeFilm">
+            <Dependent Role="Cinema_FilmTypeFilm">
               <PropertyRef Name="id_film" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Cinema_Film_TypeFilm_Cinema_TypeFilm">
+        <Association Name="FK_Cinema_FilmTypeFilm_Cinema_TypeFilm">
           <End Role="Cinema_TypeFilm" Type="Self.Cinema_TypeFilm" Multiplicity="1" />
-          <End Role="Cinema_Film_TypeFilm" Type="Self.Cinema_Film_TypeFilm" Multiplicity="*" />
+          <End Role="Cinema_FilmTypeFilm" Type="Self.Cinema_FilmTypeFilm" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cinema_TypeFilm">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Cinema_Film_TypeFilm">
-              <PropertyRef Name="id_type_film" />
+            <Dependent Role="Cinema_FilmTypeFilm">
+              <PropertyRef Name="id_typefilm" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -254,27 +256,32 @@
         </Association>
         <EntityContainer Name="CinemaModelStoreContainer">
           <EntitySet Name="Cinema_Film" EntityType="Self.Cinema_Film" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cinema_Film_TypeFilm" EntityType="Self.Cinema_Film_TypeFilm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Popcorn" EntityType="Self.Cinema_Popcorn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Room" EntityType="Self.Cinema_Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Showtime" EntityType="Self.Cinema_Showtime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Staff" EntityType="Self.Cinema_Staff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Ticket" EntityType="Self.Cinema_Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Type_Staff" EntityType="Self.Cinema_Type_Staff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_TypeFilm" EntityType="Self.Cinema_TypeFilm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_TypeTick" EntityType="Self.Cinema_TypeTick" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_User" EntityType="Self.Cinema_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_Usertype" EntityType="Self.Cinema_Usertype" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_WorkingPlan" EntityType="Self.Cinema_WorkingPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Cinema_Film_TypeFilm_Cinema_Film" Association="Self.FK_Cinema_Film_TypeFilm_Cinema_Film">
+          <EntitySet Name="Cinema_FilmTypeFilm" EntityType="Self.Cinema_FilmTypeFilm" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Cinema_FilmTypeFilm].[id_film] AS [id_film], 
+    [Cinema_FilmTypeFilm].[id_typefilm] AS [id_typefilm]
+    FROM [dbo].[Cinema_FilmTypeFilm] AS [Cinema_FilmTypeFilm]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Cinema_FilmTypeFilm_Cinema_Film" Association="Self.FK_Cinema_FilmTypeFilm_Cinema_Film">
             <End Role="Cinema_Film" EntitySet="Cinema_Film" />
-            <End Role="Cinema_Film_TypeFilm" EntitySet="Cinema_Film_TypeFilm" />
+            <End Role="Cinema_FilmTypeFilm" EntitySet="Cinema_FilmTypeFilm" />
           </AssociationSet>
-          <AssociationSet Name="FK_Cinema_Film_TypeFilm_Cinema_TypeFilm" Association="Self.FK_Cinema_Film_TypeFilm_Cinema_TypeFilm">
+          <AssociationSet Name="FK_Cinema_FilmTypeFilm_Cinema_TypeFilm" Association="Self.FK_Cinema_FilmTypeFilm_Cinema_TypeFilm">
             <End Role="Cinema_TypeFilm" EntitySet="Cinema_TypeFilm" />
-            <End Role="Cinema_Film_TypeFilm" EntitySet="Cinema_Film_TypeFilm" />
+            <End Role="Cinema_FilmTypeFilm" EntitySet="Cinema_FilmTypeFilm" />
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
             <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
@@ -316,8 +323,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cinema_TypeFilm" Relationship="Self.Cinema_Film_TypeFilm" FromRole="Cinema_Film" ToRole="Cinema_TypeFilm" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cinema_TypeFilm" Relationship="Self.Cinema_FilmTypeFilm" FromRole="Cinema_Film" ToRole="Cinema_TypeFilm" />
         </EntityType>
         <EntityType Name="Cinema_Popcorn">
           <Key>
@@ -326,7 +333,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ammount" Type="Int32" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_Room">
           <Key>
@@ -355,8 +362,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="type_staff" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="phone" Type="Int32" />
-          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cinema_Type_Staff" Relationship="Self.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Type_Staff" />
           <NavigationProperty Name="Cinema_WorkingPlan" Relationship="Self.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_WorkingPlan" />
         </EntityType>
@@ -379,6 +386,16 @@
           <NavigationProperty Name="Cinema_TypeTick" Relationship="Self.FK_Cinema_Ticket_Cinema_TypeTick" FromRole="Cinema_Ticket" ToRole="Cinema_TypeTick" />
           <NavigationProperty Name="Cinema_User" Relationship="Self.FK_Cinema_Ticket_Cinema_User" FromRole="Cinema_Ticket" ToRole="Cinema_User" />
         </EntityType>
+        <EntityType Name="Cinema_TrackingLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="time_created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="duration_expired" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cinema_Type_Staff">
           <Key>
             <PropertyRef Name="id_type_staff" />
@@ -393,8 +410,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cinema_Film" Relationship="Self.Cinema_Film_TypeFilm" FromRole="Cinema_TypeFilm" ToRole="Cinema_Film" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cinema_Film" Relationship="Self.Cinema_FilmTypeFilm" FromRole="Cinema_TypeFilm" ToRole="Cinema_Film" />
         </EntityType>
         <EntityType Name="Cinema_TypeTick">
           <Key>
@@ -402,19 +419,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="discount" Type="Double" />
+          <Property Name="discount" Type="Double" Nullable="false" />
           <Property Name="prize" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cinema_Ticket" Relationship="Self.FK_Cinema_Ticket_Cinema_TypeTick" FromRole="Cinema_TypeTick" ToRole="Cinema_Ticket" />
-        </EntityType>
-        <EntityType Name="Cinema_TrackingLogin">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="time_created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="duration_expired" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_User">
           <Key>
@@ -447,7 +454,7 @@
           <Property Name="standard_salary" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_WorkingPlan" ToRole="Cinema_Staff" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -541,7 +548,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Cinema_Film_TypeFilm">
+        <Association Name="Cinema_FilmTypeFilm">
           <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="*" />
           <End Role="Cinema_TypeFilm" Type="Self.Cinema_TypeFilm" Multiplicity="*" />
         </Association>
@@ -552,14 +559,14 @@
           <EntitySet Name="Cinema_Showtime" EntityType="Self.Cinema_Showtime" />
           <EntitySet Name="Cinema_Staff" EntityType="Self.Cinema_Staff" />
           <EntitySet Name="Cinema_Ticket" EntityType="Self.Cinema_Ticket" />
+          <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" />
           <EntitySet Name="Cinema_Type_Staff" EntityType="Self.Cinema_Type_Staff" />
           <EntitySet Name="Cinema_TypeFilm" EntityType="Self.Cinema_TypeFilm" />
           <EntitySet Name="Cinema_TypeTick" EntityType="Self.Cinema_TypeTick" />
-          <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" />
           <EntitySet Name="Cinema_User" EntityType="Self.Cinema_User" />
           <EntitySet Name="Cinema_Usertype" EntityType="Self.Cinema_Usertype" />
           <EntitySet Name="Cinema_WorkingPlan" EntityType="Self.Cinema_WorkingPlan" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_Room" Association="Self.FK_Cinema_Ticket_Cinema_Room">
             <End Role="Cinema_Room" EntitySet="Cinema_Room" />
             <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
@@ -588,7 +595,7 @@
             <End Role="Cinema_Usertype" EntitySet="Cinema_Usertype" />
             <End Role="Cinema_User" EntitySet="Cinema_User" />
           </AssociationSet>
-          <AssociationSet Name="Cinema_Film_TypeFilm" Association="Self.Cinema_Film_TypeFilm">
+          <AssociationSet Name="Cinema_FilmTypeFilm" Association="Self.Cinema_FilmTypeFilm">
             <End Role="Cinema_Film" EntitySet="Cinema_Film" />
             <End Role="Cinema_TypeFilm" EntitySet="Cinema_TypeFilm" />
           </AssociationSet>
@@ -661,6 +668,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Cinema_TrackingLogin">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_TrackingLogin">
+              <MappingFragment StoreEntitySet="Cinema_TrackingLogin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="time_created" ColumnName="time_created" />
+                <ScalarProperty Name="duration_expired" ColumnName="duration_expired" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cinema_Type_Staff">
             <EntityTypeMapping TypeName="CinemaModel.Cinema_Type_Staff">
               <MappingFragment StoreEntitySet="Cinema_Type_Staff">
@@ -685,17 +703,6 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
                 <ScalarProperty Name="prize" ColumnName="prize" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cinema_TrackingLogin">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_TrackingLogin">
-              <MappingFragment StoreEntitySet="Cinema_TrackingLogin">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="time_created" ColumnName="time_created" />
-                <ScalarProperty Name="duration_expired" ColumnName="duration_expired" />
-                <ScalarProperty Name="username" ColumnName="username" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -730,7 +737,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CinemaModel.sysdiagrams">
+            <EntityTypeMapping TypeName="CinemaModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -740,12 +747,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Cinema_Film_TypeFilm" TypeName="CinemaModel.Cinema_Film_TypeFilm" StoreEntitySet="Cinema_Film_TypeFilm">
+          <AssociationSetMapping Name="Cinema_FilmTypeFilm" TypeName="CinemaModel.Cinema_FilmTypeFilm" StoreEntitySet="Cinema_FilmTypeFilm">
             <EndProperty Name="Cinema_Film">
               <ScalarProperty Name="id" ColumnName="id_film" />
             </EndProperty>
             <EndProperty Name="Cinema_TypeFilm">
-              <ScalarProperty Name="id" ColumnName="id_type_film" />
+              <ScalarProperty Name="id" ColumnName="id_typefilm" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
@@ -762,7 +769,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

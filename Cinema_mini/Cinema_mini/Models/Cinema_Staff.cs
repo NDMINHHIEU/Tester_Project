@@ -23,7 +23,7 @@ namespace Cinema_mini.Models
         public int id { get; set; }
         public int type_staff { get; set; }
         public string name { get; set; }
-        public Nullable<int> phone { get; set; }
+        public int phone { get; set; }
         public string address { get; set; }
     
         public virtual Cinema_Type_Staff Cinema_Type_Staff { get; set; }
