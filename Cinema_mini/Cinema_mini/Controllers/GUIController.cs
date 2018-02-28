@@ -113,21 +113,28 @@ namespace Cinema_mini.Controllers
         {
             try
             {
-                string username = Request.QueryString["u"].ToString();
-                using (CinemaEntities db = new CinemaEntities())
+                if (Request.QueryString["u"] == null)
                 {
-                    var check = db.Cinema_TrackingLogin.Where(a => a.username == username && a.duration_expired > DateTime.Now).SingleOrDefault();
-                    if (check != null)
+                    return View("Index");
+                }
+                else
+                {
+                    string username = Request.QueryString["u"].ToString();
+                    using (CinemaEntities db = new CinemaEntities())
                     {
-                        //neu ton tai, tuc la no van con thoi gian luu giu thong tin dang nhap
-                        return View();
+                        var check = db.Cinema_TrackingLogin.Where(a => a.username == username && a.duration_expired > DateTime.Now).SingleOrDefault();
+                        if (check != null)
+                        {
+                            //neu ton tai, tuc la no van con thoi gian luu giu thong tin dang nhap
+                            return View();
+                        }
+                        else return View("Index");
                     }
-                    else return View("Index");
                 }
             }
             catch (Exception e)
-            {
-                throw e;
+            {                                  
+                return View("Show_error");
             }
         }
 

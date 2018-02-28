@@ -17,6 +17,7 @@ namespace Cinema_mini.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cinema_Staff()
         {
+            this.Cinema_Ticket = new HashSet<Cinema_Ticket>();
             this.Cinema_WorkingPlan = new HashSet<Cinema_WorkingPlan>();
         }
     
@@ -27,6 +28,8 @@ namespace Cinema_mini.Models
         public string address { get; set; }
     
         public virtual Cinema_Type_Staff Cinema_Type_Staff { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cinema_Ticket> Cinema_Ticket { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cinema_WorkingPlan> Cinema_WorkingPlan { get; set; }
     }

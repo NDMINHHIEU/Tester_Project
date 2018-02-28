@@ -3,387 +3,217 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Cinema_mini.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Cinema_mini.Models;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace Cinema_mini.Controllers
 {
-    [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-
-        public ManageController()
+        //quản lý vé
+        #region quản lý vé
+        public ViewResult Ticket_Management()
         {
-        }
-
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
+            using (CinemaEntities db = new CinemaEntities())
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                //get type ticket
+                var list_type_tick = db.Cinema_TypeTick.ToList();
+                ViewBag.list_tt = list_type_tick;
+                //get room
+                var list_room = db.Cinema_Room.ToList();
+                ViewBag.list_r = list_room;
+                //get showtime
+                var list_stime = db.Cinema_Showtime.ToList();
+                ViewBag.list_st = list_stime;
+                return View();
             }
-            private set 
+        }
+        
+        public string Get_ticket_data()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                var ticket = db.get_ticket.ToList();
+                string json = JsonConvert.SerializeObject(ticket, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                return json;
+            }
+        }
+
+
+        public string delete_ticket()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                Services_1 msg = new Services_1();
+                string json_return = "";
+                int id_tick = Int32.Parse(Request.Form["id_ticket"].ToString());
+                var check = db.Cinema_Ticket.Where(r => r.id == id_tick).SingleOrDefault();
+                if (check != null)
+                {
+                    db.Cinema_Ticket.Remove(check);
+                    db.SaveChanges();
+                    msg.code = 0;
+                    msg.msg = "Thanh cong";
+                }
+                else
+                {
+                    msg.code = 1;
+                    msg.msg = "Xoa that bai";
+                }
+                json_return = JsonConvert.SerializeObject(msg);
+                return json_return; 
+            }
+        }
+
+        //public string get_ticket_by_id()
+        //{
+        //    using (CinemaEntities db = new CinemaEntities())
+        //    {
+        //        string json = "";
+        //        Services_1 msg = new Services_1();
+        //        string id = Request.Form["id_ticket"].ToString();
+        //        int id_tick = Int32.Parse(id);
+        //        var ticket = db.Cinema_Ticket.Where(r => r.id == id_tick).SingleOrDefault();
+        //        if (ticket != null)
+        //        {
+        //            json = JsonConvert.SerializeObject(ticket, Formatting.Indented,
+        //                          new JsonSerializerSettings()
+        //                          {
+        //                              ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        //                          });
+        //        }
+        //        else
+        //        {
+        //            msg.code = 1;
+        //            msg.msg = "ticket khong ton tai";
+        //            json = JsonConvert.SerializeObject(msg, Formatting.Indented,
+        //                          new JsonSerializerSettings()
+        //                          {
+        //                              ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        //                          });
+        //        }
+        //        return json;
+        //    }
+        //}
+        #endregion
+
+        #region quản lý phim
+
+        public ViewResult Film_Management()
+        {
+            Get_NeededIn4();
+            return View();
+        }
+
+        //get all needed info
+        public void Get_NeededIn4()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                //type film
+                var list_typefilm = db.Cinema_TypeFilm.ToList();
+                ViewBag.typefilm = list_typefilm;
+                
+            }
+        }
+        
+        public string Get_film_data()
+        {
+            using (CinemaEntities db = new CinemaEntities())
             { 
-                _signInManager = value; 
+                var film = db.View_get_film_data.ToList();
+                string json_result = JsonConvert.SerializeObject(film, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                return json_result;
             }
         }
 
-        public ApplicationUserManager UserManager
+        public string get_info_film()
         {
-            get
+            using (CinemaEntities db = new CinemaEntities())
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        //
-        // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
-            var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
-            return View(model);
-        }
-
-        //
-        // POST: /Manage/RemoveLogin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
-        {
-            ManageMessageId? message;
-            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
+                string json_result = "";
+                Services_1 msg = new Services_1();
+                int id_film = Int32.Parse(Request.Form["id_film"]);
+                var film = db.Cinema_Film.Where(r => r.id == id_film).SingleOrDefault();
+                if (film != null)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    json_result = JsonConvert.SerializeObject(film, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
                 }
-                message = ManageMessageId.RemoveLoginSuccess;
+                return json_result;
             }
-            else
-            {
-                message = ManageMessageId.Error;
-            }
-            return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
-        // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
+        public string Save_film()
         {
-            return View();
-        }
-
-        //
-        // POST: /Manage/AddPhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
-        {
-            if (!ModelState.IsValid)
+            using (CinemaEntities db = new CinemaEntities())
             {
-                return View(model);
-            }
-            // Generate the token and send it
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            if (UserManager.SmsService != null)
-            {
-                var message = new IdentityMessage
+                Services_1 msg = new Services_1();
+                int id = Int32.Parse(Request.Form["id_film"]);
+                string name_film = Request.Form["name"];
+                var type_film = Request.Form["type_film"].ToCharArray();
+                List<int> typefilm_list = new List<int>();
+                string temp = ""; //luu ten type film
+                string temp2 = "";                   // luu id type film
+                foreach (var item in type_film)
                 {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await UserManager.SmsService.SendAsync(message);
-            }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
-        }
-
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EnableTwoFactorAuthentication()
-        {
-            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return RedirectToAction("Index", "Manage");
-        }
-
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DisableTwoFactorAuthentication()
-        {
-            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), false);
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return RedirectToAction("Index", "Manage");
-        }
-
-        //
-        // GET: /Manage/VerifyPhoneNumber
-        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
-        {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // Send an SMS through the SMS provider to verify the phone number
-            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
-        }
-
-        //
-        // POST: /Manage/VerifyPhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
-            }
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Failed to verify phone");
-            return View(model);
-        }
-
-        //
-        // POST: /Manage/RemovePhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemovePhoneNumber()
-        {
-            var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
-            if (!result.Succeeded)
-            {
-                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
-            }
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
-        }
-
-        //
-        // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/ChangePassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-            }
-            AddErrors(result);
-            return View(model);
-        }
-
-        //
-        // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/SetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                if (result.Succeeded)
-                {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
+                    int n = 0;
+                    string Char = item.ToString();
+                    if (Int32.TryParse(Char, out n))
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        int result = Int32.Parse(Char);
+                        typefilm_list.Add(result);
                     }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Manage/ManageLogins
-        public async Task<ActionResult> ManageLogins(ManageMessageId? message)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user == null)
-            {
-                return View("Error");
-            }
-            var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
-            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
-            ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-            return View(new ManageLoginsViewModel
-            {
-                CurrentLogins = userLogins,
-                OtherLogins = otherLogins
-            });
-        }
-
-        //
-        // POST: /Manage/LinkLogin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LinkLogin(string provider)
-        {
-            // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
-        }
-
-        //
-        // GET: /Manage/LinkLoginCallback
-        public async Task<ActionResult> LinkLoginCallback()
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-            if (loginInfo == null)
-            {
-                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-            }
-            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && _userManager != null)
-            {
-                _userManager.Dispose();
-                _userManager = null;
-            }
-
-            base.Dispose(disposing);
-        }
-
-#region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
+                foreach (var item in typefilm_list)
+                {
+                    var name_typefilm = db.Cinema_TypeFilm.Where(r => r.id == item).SingleOrDefault();
+                    if (name_typefilm!=null)
+                    {
+                        temp += name_typefilm.name + ",";
+                        temp2 += item + ",";
+                    }
+                }
+                var film = db.Cinema_Film.Where(r => r.id == id).SingleOrDefault();
+                if (film!=null)
+                {
+                    film.name = name_film;
+                    film.id_type_film = temp2 ;
+                    film.name_type_film = temp;
+                    db.SaveChanges();
+                    msg.code = 1;
+                    msg.msg = "Luu thanh cong film " + name_film;
+                }
+                else
+                {
+                    msg.code = 0;
+                    msg.msg = "Film" + name_film + " khong ton tai";
+                }
+                string json_result = JsonConvert.SerializeObject(msg, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                }); ;
+                return json_result;
             }
         }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
-
-        private bool HasPassword()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
-        }
-
-        private bool HasPhoneNumber()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
-        }
-
-        public enum ManageMessageId
-        {
-            AddPhoneSuccess,
-            ChangePasswordSuccess,
-            SetTwoFactorSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            RemovePhoneSuccess,
-            Error
-        }
-
-#endregion
+        #endregion
     }
 }

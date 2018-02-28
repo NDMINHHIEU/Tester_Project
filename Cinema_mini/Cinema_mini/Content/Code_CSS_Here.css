@@ -1,1 +1,4 @@
-﻿
+﻿table.dataTable tbody td {
+  vertical-align:  middle;
+  font-size:    15px;
+}

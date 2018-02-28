@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý vé";
+    Layout = "~/Views/Shared/Master_Admin_Page.cshtml";
+
+}
+
+<script>
+    //datatable
+    $(document).ready(function () {
+        $('#data-table-ticket').DataTable({
+            "ajax": {
+                "url": "Get_ticket_data",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "id_pc" },
+                { "data": "id_sc" },
+                { "data": "id_user" },
+                { "data": "id_type_tick" },
+                { "data": "id_film" },
+                { "data": "PC_Name" },
+                { "data": "SC_Name" },
+                { "data": "username" },
+                { "data": "TT_Name" },
+                { "data": "FI_Name" },
+                { "data": "created_date" }
+            ],
+            "columnDefs": [{
+                "targets": 0,
+                "render": function (data, type, row, meta) {
+                    return '<button id="edit_' + data + '" data-val="' + data + '" class="btn btn-remove btn-danger">Xóa</button>';
+                }
+            }
+            ],
+            processing: true,
+            responsive: true
+        });
+        $('.panel').lobiPanel();
+    });
+</script>
+<!-- table -->
+<div class="panel panel-success">
+    <div class="panel-heading">   
+        <div class="panel-title">
+            <h4 class="text-uppercase">Quản lý vé</h4>
+        </div>
+    </div>
+    <div class="panel-body">
+        <br clear="all"/><br clear="all" />
+        <table id="data-table-ticket" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ID Phòng chiếu
+                    <th>ID Suất chiếu</th>
+                    <th>ID User</th>
+                    <th>ID Loại vé</th>
+                    <th>ID Phim</th>
+                    <th>Tên Phòng chiếu
+                    <th>Tên Suất chiếu</th>
+                    <th>Tên User</th>
+                    <th>Tên Loại vé</th>
+                    <th>Tên Phim</th>
+                    <th>Ngày khởi tạo</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- Modal -->
+    <!-- 
+        <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Sửa vé </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="sl_typetick">Loại vé</label>
+                            <select id="sl_typetick" class="form-control">
+                                @foreach (var item in ViewBag.list_tt)
+                                {
+                                             <option value="@item.id">@item.name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                                <label for="username">Người tạo: </label>
+                              <input class="form-control" disabled id="username" type="text" />
+                        </div>
+                    </div>
+                    <br clear="all"/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="sl_room">Phòng chiếu : </label>
+                            <select id="sl_room" class="form-control">
+                                @foreach (var item in ViewBag.list_r)
+                                {
+                                    <option value="@item.id">@item.name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sl_showtime">Suất chiếu : </label>
+                            <select id="sl_showtime" class="form-control">
+                                @foreach (var item in ViewBag.list_st)
+                                {
+                                    <option value="@item.id">@item.name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+         -->
+</div>

@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Film_Management";
+    Layout = "~/Views/Shared/Master_Admin_Page.cshtml";
+}
+<script src="~/Content/lobi/js/plugin/select2/select2.min.js"></script>
+<script src="~/Content/Film_JS.js"></script>
+<script>
+    //datatable
+    $(document).ready(function () {
+        $('#data-table-film').DataTable({
+            "ajax": {
+                "url": "Get_film_data",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "description" },
+                { "data": "name_type_film" },
+                { "data": "created_date" }
+            ],
+            "language": {
+                "processing": "<i class='fa-spinner fa-circle-o-notch></i>"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "render": function (data, type, row, meta) {
+                    return '<button id="edit_' + data + '" data-val="' + data + '" class="btn btn-edit btn-primary">Sửa</button> |'
+                        + ' <button id="edit_' + data + '" data-val="' + data + '" class="btn btn-remove btn-danger">Xóa</button>';
+                }
+            },
+            {"className": "text-center", "targets": 0}
+            ],
+            processing: true,
+            responsive: true
+        });
+        $('.panel').lobiPanel();
+        $('#sl_typefilm').select2({placeholder: "Chọn thể loại"});
+    });
+</script>
+<!-- table -->
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h4 class="text-uppercase">Quản lý phim</h4>
+        </div>
+    </div>
+    <div class="panel-body">
+        <br clear="all" /><br clear="all" />
+        <table id="data-table-film" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Phim</th>
+                    <th>Mô tả</th>
+                    <th>Thể loại</th>
+                    <th>Ngày khởi tạo</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- Modal -->
+    
+        <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="inp_filmname">Tên phim: </label>
+                            <input class="form-control" id="inp_filmname" type="text" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sl_typefilm">Thể loại: </label>
+                            <select id="sl_typefilm" class="js-example-basic-multiple form-control" multiple="multiple">
+                                @foreach (var item in ViewBag.typefilm)
+                                {
+                                             <option value="@item.id">@item.name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="inp_hidden_id"/>
+                <div class="modal-footer">
+                    <button id="btn_save" type="button" class="btn btn-success">Lưu</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+         
+</div>

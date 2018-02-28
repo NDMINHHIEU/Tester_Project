@@ -25,7 +25,6 @@ namespace Cinema_mini.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Cinema_Film> Cinema_Film { get; set; }
         public virtual DbSet<Cinema_Popcorn> Cinema_Popcorn { get; set; }
         public virtual DbSet<Cinema_Room> Cinema_Room { get; set; }
         public virtual DbSet<Cinema_Showtime> Cinema_Showtime { get; set; }
@@ -33,11 +32,14 @@ namespace Cinema_mini.Models
         public virtual DbSet<Cinema_Ticket> Cinema_Ticket { get; set; }
         public virtual DbSet<Cinema_TrackingLogin> Cinema_TrackingLogin { get; set; }
         public virtual DbSet<Cinema_Type_Staff> Cinema_Type_Staff { get; set; }
-        public virtual DbSet<Cinema_TypeFilm> Cinema_TypeFilm { get; set; }
         public virtual DbSet<Cinema_TypeTick> Cinema_TypeTick { get; set; }
         public virtual DbSet<Cinema_User> Cinema_User { get; set; }
         public virtual DbSet<Cinema_Usertype> Cinema_Usertype { get; set; }
         public virtual DbSet<Cinema_WorkingPlan> Cinema_WorkingPlan { get; set; }
+        public virtual DbSet<get_ticket> get_ticket { get; set; }
+        public virtual DbSet<Cinema_Film> Cinema_Film { get; set; }
+        public virtual DbSet<View_get_film_data> View_get_film_data { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Cinema_TypeFilm> Cinema_TypeFilm { get; set; }
     }
 }

@@ -2,14 +2,6 @@
 
 $(document).ready(function(){
 
-    HTMLElement.prototype.startLoading = function(){
-        var spinner = $('body>.spinner').clone().removeClass('hide');
-        $(this).append(spinner);
-    };
-    
-    HTMLElement.prototype.stopLoading = function(){
-        $(this).find('.spinner, .spinner-backdrop').remove();
-    };
     
 //------------------------------------------------------------------------------
     var CONFIG = window.LobiAdminConfig;
@@ -363,13 +355,11 @@ $(document).ready(function(){
             _triggerEvent('beforePageLoad', url);
             //get the panel in which we are loading page
             var contentPanel = me.$contentPanel;
-            contentPanel.html('')[0].startLoading();
             $.ajax({
                 type: 'GET',
                 dataType: 'html',
                 url: url,
                 success: function (html) {
-                    contentPanel.html(html)[0].stopLoading();
                     me.$currentPage = url;
                     me.drawBreadcrumbs();
                     //set the page title
@@ -385,8 +375,6 @@ $(document).ready(function(){
                         } else if (xhr.status === 500) {
                             me.load(CONFIG.error500, CONFIG.error500Title, true);
                         }
-                    } else {
-                        contentPanel.html('')[0].stopLoading();
                     }
                 }
             });
@@ -407,28 +395,6 @@ $(document).ready(function(){
          * 
          * @returns {LobiAdmin}
          */
-        this.drawBreadcrumbs = function(){
-            var path = me.$navPanel.getActivePath();
-            var $br = $(CONFIG.breadcrumbsListSelector);
-            $br.html("");
-            for (var i = 0; i<path.length; i++){
-                var $li;
-                if (i === 0){
-                    var $li = $('<li>'+path[i].text+'</li>');
-                    $li.addClass('active');
-                    if (path[i].icon) {
-                        $li.prepend(path[i].icon, " ");
-                    }
-                }else{
-                    var $li = $('<li><a href="'+path[i].href+'">' + path[i].text + '</a></li>');
-                    if (path[i].icon) {
-                        $li.find('>a').prepend(path[i].icon, " ");
-                    }
-                }
-                $br.prepend($li);
-            }
-            return me;
-        };
         /**
          * Fix header
          * 

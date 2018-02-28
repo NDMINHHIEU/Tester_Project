@@ -203,7 +203,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GUIController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -263,20 +262,28 @@
     <Compile Include="Models\Cinema_WorkingPlan.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\get_ticket.cs">
+      <DependentUpon>Cinema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_get_film_data.cs">
+      <DependentUpon>Cinema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Services_1.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="toJSON.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Code_CSS_Here.css" />
     <Content Include="Content\Code_JS_Here.js" />
+    <Content Include="Content\Film_JS.js" />
     <Content Include="Content\lobi\BOOTSTRAP\dist\css\bootstrap-theme.css" />
     <Content Include="Content\lobi\BOOTSTRAP\dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\lobi\BOOTSTRAP\dist\css\bootstrap.css" />
@@ -2513,6 +2520,7 @@
     <Content Include="Content\lobi\sound\lobibox\sound4.mp3" />
     <Content Include="Content\lobi\sound\lobibox\sound5.mp3" />
     <Content Include="Content\lobi\sound\lobibox\sound6.mp3" />
+    <Content Include="Content\Ticket_JS.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -4033,9 +4041,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -4048,17 +4053,13 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\GUI\Index.cshtml" />
     <Content Include="Views\GUI\Main.cshtml" />
     <Content Include="Views\Shared\Master_Admin_Page.cshtml" />
     <Content Include="Views\GUI\Show_error.cshtml" />
+    <Content Include="Views\Manage\Ticket_Management.cshtml" />
+    <Content Include="Views\Manage\Film_Management.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

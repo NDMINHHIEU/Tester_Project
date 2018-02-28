@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="img/logo/lobiadmin-logo-16.ico" />
-
     <link rel="stylesheet" href="~/Content/lobi/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/lobi/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/Content/lobi/css/weather-icons.min.css" />
@@ -20,15 +19,252 @@
     <script type="text/javascript" src="~/Content/lobi/js/lobi-plugins/lobibox.min.js"></script>
     <script type="text/javascript" src="~/Content/lobi/js/lobi-plugins/lobipanel.min.js"></script>
     <script type="text/javascript" src="~/Content/lobi/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-
+    <!-- load script -->
+    <script type="text/javascript" src="~/Content/lobi/js/plugin/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/lobi/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Content/lobi/js/plugin/datatables/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="~/Content/lobi/js/plugin/bootstrap-datepicker/bootstrap-datepicker.js"></script>
     <!--Make sure that config.js file is loaded before LobiAdmin.js-->
     <script type="text/javascript" src="~/Content/lobi/js/config.js"></script>
-    <script type="text/javascript" src="~/Content/lobi/js/LobiAdmin.min.js"></script>
+    <script type="text/javascript" src="~/Content/lobi/js/LobiAdmin.js"></script>
     <script type="text/javascript" src="~/Content/lobi/js/app.js"></script>
     <script type="text/javascript" src="~/Content/lobi/js/demo.js"></script>
+    <script src="~/Content/Ticket_JS.js"></script>
+    <link href="~/Content/Code_CSS_Here.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
-    <body>
-       @RenderBody()
+    <body class="menu-collapsed">
+        
+        <nav class="navbar navbar-default navbar-header header">
+            <a class="navbar-brand" href="#">
+                <div class="navbar-brand-img"></div>
+                <!--<img src="img/logo/lobiadmin-logo-text-white-32.png" class="hidden-xs" alt="" />-->
+            </a>
+            <!--Menu show/hide toggle button-->
+            <ul class="nav navbar-nav pull-left show-hide-menu">
+                <li>
+                    <a href="#" class="border-radius-0 btn font-size-lg" data-action="show-hide-sidebar">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </li>
+            </ul>
+            <form class="navbar-search pull-left">
+                <label for="search" class="sr-only">Search...</label>
+                <input type="text" class="font-size-lg" name="search" id="search" placeholder="Search...">
+                <a class="btn btn-search">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+                <a class="btn btn-remove">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </form>
+            <div class="navbar-items">
+                <!--User avatar dropdown-->
+                <ul class="nav navbar-nav navbar-right user-actions">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img class="user-avatar" src="~/Content/lobi/img/users/me-160.jpg" alt="..." />
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#profile"><span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;Profile</a></li>
+                            <li><a href="#timeline"><i class="fa fa-code-fork"></i> &nbsp;&nbsp;Timeline</a></li>
+                            <li><a href="#lobimail"><span class="glyphicon glyphicon-envelope"></span> &nbsp;&nbsp;Messages</a></li>
+                            <li class="divider"></li>
+                            <li><a href="lock.html"><span class="glyphicon glyphicon-lock"></span> &nbsp;&nbsp;Lock screen</a></li>
+                            <li><a href="login.html"><span class="glyphicon glyphicon-off"></span> &nbsp;&nbsp;Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix-xxs"></div>
+            <div class="clearfix"></div>
+        </nav>
+
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="~/Manage/Ticket_Management">
+                            <i class="fa fa-ticket menu-item-icon"></i>
+                            <span class="inner-text">Quản lý vé</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Manage/Film_Management">
+                            <i class="fa fa-film menu-item-icon"></i>
+                            <span class="inner-text">Quản lý phim</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-cutlery menu-item-icon"></i>
+                            <span class="inner-text">Quản lý thực phẩm</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-user menu-item-icon"></i>
+                            <span class="inner-text">Quản lý nhân viên</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="menu-collapse-line">
+                <!--Menu collapse/expand icon is put and control from LobiAdmin.js file-->
+                <div class="menu-toggle-btn" data-action="collapse-expand-sidebar"></div>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <!--Setting box-->
+        <div class="setting-box hidden-print">
+            <div class="btn-toggle">
+                <span class="glyphicon glyphicon-cog"></span>
+            </div>
+            <form action class="lobi-form">
+                <fieldset>
+                    <header>LobiAdmin Settings</header>
+                    <div class="form-group">
+                        <label class="checkbox-inline lobicheck lobicheck-rounded">
+                            Header fixed
+                            <input type="checkbox" class="fix-header" value="1">
+                            <i></i>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-inline lobicheck lobicheck-rounded">
+                            Menu fixed
+                            <input type="checkbox" class="fix-menu">
+                            <i></i>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-inline lobicheck lobicheck-rounded">
+                            Ribbon fixed
+                            <input type="checkbox" class="fix-ribbon">
+                            <i></i>
+                        </label>
+                    </div>
+                    <div class="row row-skin-options">
+                        <h4>Skins</h4>
+                        <div class="col-xs-3">
+                            <label class="radio">
+                                <input type="radio" name="header-skin" value="0" checked>
+                                <div>
+                                    <div class="setting-header"></div>
+                                    <div class="setting-menu"></div>
+                                </div>
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="radio">
+                                <input type="radio" name="header-skin" value="header-cyan">
+                                <div>
+                                    <div class="setting-header"></div>
+                                    <div class="setting-menu"></div>
+                                </div>
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="radio">
+                                <input type="radio" name="header-skin" value="header-green">
+                                <div>
+                                    <div class="setting-header"></div>
+                                    <div class="setting-menu"></div>
+                                </div>
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="radio">
+                                <input type="radio" name="header-skin" value="header-brown">
+                                <div>
+                                    <div class="setting-header"></div>
+                                    <div class="setting-menu"></div>
+                                </div>
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <!--                    <div class="row row-skin-options">
+                                        <h4>Skins</h4>
+                                        <div class="btn-group display-block" data-toggle="buttons">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="header-skin" value="0">
+                                                <div>
+                                                    <div class="setting-header"></div>
+                                                    <div class="setting-menu"></div>
+                                                </div>
+                                                <i class="fa fa-check-square"></i>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="header-skin" value="header-cyan">
+                                                <div>
+                                                    <div class="setting-header"></div>
+                                                    <div class="setting-menu"></div>
+                                                </div>
+                                                <i class="fa fa-check-square"></i>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="header-skin" value="header-green">
+                                                <div>
+                                                    <div class="setting-header"></div>
+                                                    <div class="setting-menu"></div>
+                                                </div>
+                                                <i class="fa fa-check-square"></i>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="header-skin" value="header-brown">
+                                                <div>
+                                                    <div class="setting-header"></div>
+                                                    <div class="setting-menu"></div>
+                                                </div>
+                                                <i class="fa fa-check-square"></i>
+                                            </label>
+                                        </div>
+                                    </div>-->
+                    <div class="row row-bg-options">
+                        <h4>Background</h4>
+                        <div class="col-xs-3">
+                            <label class="radio" style="background-color: #f2f2f2">
+                                <input type="radio" name="body-bg" data-is-color="true" value="#f2f2f2" checked>
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="radio" style="background-color: #edf1f4">
+                                <input type="radio" name="body-bg" data-is-color="true" value="#edf1f4">
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="radio" style="background-image: url('img/bg/bg1.png')">
+                                <input type="radio" name="body-bg" value="img/bg/bg1.png">
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <label class="radio" style="background-image: url('img/bg/bg4.png')">
+                                <input type="radio" name="body-bg" value="img/bg/bg4.png">
+                                <i class="fa fa-check-square"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-pretty" data-action="clear-storage"><i class="fa fa-refresh"></i> Clear local storage</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <!--Loading indicator for ajax page loading-->
+        <div class="spinner spinner-horizontal hide">
+            <span class="spinner-text">Loading...</span>
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
     </body>
 </html>

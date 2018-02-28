@@ -17,14 +17,17 @@ namespace Cinema_mini.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cinema_Film()
         {
-            this.Cinema_TypeFilm = new HashSet<Cinema_TypeFilm>();
+            this.Cinema_Ticket = new HashSet<Cinema_Ticket>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public string id_type_film { get; set; }
+        public System.DateTime created_date { get; set; }
+        public string name_type_film { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cinema_TypeFilm> Cinema_TypeFilm { get; set; }
+        public virtual ICollection<Cinema_Ticket> Cinema_Ticket { get; set; }
     }
 }

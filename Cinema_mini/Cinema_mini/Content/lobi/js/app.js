@@ -7,8 +7,6 @@ $(function(){
         $('[data-toggle="popover"]').popover();
     })();
     
-    //DEFAULT COLOR FOR CHARTS
-    LobiAdmin.DEFAULT_COLOR = '#216ba0';
     
     //Enable tooltips and popovers on every page load
     $('body').on('pageLoaded.lobiAdmin', function (ev) {

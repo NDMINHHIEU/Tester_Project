@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CinemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CinemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cinema_Film">
           <Key>
             <PropertyRef Name="id" />
@@ -12,16 +12,9 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Cinema_FilmTypeFilm">
-          <Key>
-            <PropertyRef Name="id_film" />
-            <PropertyRef Name="id_typefilm" />
-          </Key>
-          <Property Name="id_film" Type="int" Nullable="false" />
-          <Property Name="id_typefilm" Type="int" Nullable="false" />
+          <Property Name="id_type_film" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="name_type_film" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_Popcorn">
           <Key>
@@ -67,12 +60,16 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             <PropertyRef Name="id_sc" />
             <PropertyRef Name="id_user" />
             <PropertyRef Name="id_type_tick" />
+            <PropertyRef Name="id_film" />
+            <PropertyRef Name="id_nv" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_pc" Type="int" Nullable="false" />
           <Property Name="id_sc" Type="int" Nullable="false" />
           <Property Name="id_user" Type="int" Nullable="false" />
           <Property Name="id_type_tick" Type="int" Nullable="false" />
+          <Property Name="id_film" Type="int" Nullable="false" />
+          <Property Name="id_nv" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime" />
         </EntityType>
         <EntityType Name="Cinema_TrackingLogin">
@@ -146,30 +143,57 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_Cinema_FilmTypeFilm_Cinema_Film">
-          <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="1" />
-          <End Role="Cinema_FilmTypeFilm" Type="Self.Cinema_FilmTypeFilm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cinema_Film">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Cinema_FilmTypeFilm">
-              <PropertyRef Name="id_film" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cinema_FilmTypeFilm_Cinema_TypeFilm">
-          <End Role="Cinema_TypeFilm" Type="Self.Cinema_TypeFilm" Multiplicity="1" />
-          <End Role="Cinema_FilmTypeFilm" Type="Self.Cinema_FilmTypeFilm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cinema_TypeFilm">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Cinema_FilmTypeFilm">
-              <PropertyRef Name="id_typefilm" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.get_ticket' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="get_ticket">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="id_pc" />
+            <PropertyRef Name="id_sc" />
+            <PropertyRef Name="id_user" />
+            <PropertyRef Name="id_type_tick" />
+            <PropertyRef Name="id_film" />
+            <PropertyRef Name="PC_Name" />
+            <PropertyRef Name="SC_Name" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="TT_Name" />
+            <PropertyRef Name="FI_Name" />
+            <PropertyRef Name="id_nv" />
+            <PropertyRef Name="ST_Name" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_pc" Type="int" Nullable="false" />
+          <Property Name="id_sc" Type="int" Nullable="false" />
+          <Property Name="id_user" Type="int" Nullable="false" />
+          <Property Name="id_type_tick" Type="int" Nullable="false" />
+          <Property Name="id_film" Type="int" Nullable="false" />
+          <Property Name="PC_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SC_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TT_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FI_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="id_nv" Type="int" Nullable="false" />
+          <Property Name="ST_Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_get_film_data">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="id_type_film" />
+            <PropertyRef Name="name_type_film" />
+            <PropertyRef Name="created_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="id_type_film" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="name_type_film" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Cinema_Staff_Cinema_Type_Staff">
           <End Role="Cinema_Type_Staff" Type="Self.Cinema_Type_Staff" Multiplicity="1" />
           <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="*" />
@@ -179,6 +203,18 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             </Principal>
             <Dependent Role="Cinema_Staff">
               <PropertyRef Name="type_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cinema_Ticket_Cinema_Film">
+          <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="1" />
+          <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Film">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_Ticket">
+              <PropertyRef Name="id_film" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -203,6 +239,18 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             </Principal>
             <Dependent Role="Cinema_Ticket">
               <PropertyRef Name="id_sc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cinema_Ticket_Cinema_Staff">
+          <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="1" />
+          <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_Ticket">
+              <PropertyRef Name="id_nv" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -269,23 +317,41 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <EntitySet Name="Cinema_Usertype" EntityType="Self.Cinema_Usertype" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cinema_WorkingPlan" EntityType="Self.Cinema_WorkingPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cinema_FilmTypeFilm" EntityType="Self.Cinema_FilmTypeFilm" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="get_ticket" EntityType="Self.get_ticket" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Cinema_FilmTypeFilm].[id_film] AS [id_film], 
-    [Cinema_FilmTypeFilm].[id_typefilm] AS [id_typefilm]
-    FROM [dbo].[Cinema_FilmTypeFilm] AS [Cinema_FilmTypeFilm]</DefiningQuery>
+    [get_ticket].[id] AS [id], 
+    [get_ticket].[id_pc] AS [id_pc], 
+    [get_ticket].[id_sc] AS [id_sc], 
+    [get_ticket].[id_user] AS [id_user], 
+    [get_ticket].[id_type_tick] AS [id_type_tick], 
+    [get_ticket].[id_film] AS [id_film], 
+    [get_ticket].[PC_Name] AS [PC_Name], 
+    [get_ticket].[SC_Name] AS [SC_Name], 
+    [get_ticket].[username] AS [username], 
+    [get_ticket].[TT_Name] AS [TT_Name], 
+    [get_ticket].[FI_Name] AS [FI_Name], 
+    [get_ticket].[created_date] AS [created_date], 
+    [get_ticket].[id_nv] AS [id_nv], 
+    [get_ticket].[ST_Name] AS [ST_Name]
+    FROM [dbo].[get_ticket] AS [get_ticket]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_Cinema_FilmTypeFilm_Cinema_Film" Association="Self.FK_Cinema_FilmTypeFilm_Cinema_Film">
-            <End Role="Cinema_Film" EntitySet="Cinema_Film" />
-            <End Role="Cinema_FilmTypeFilm" EntitySet="Cinema_FilmTypeFilm" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cinema_FilmTypeFilm_Cinema_TypeFilm" Association="Self.FK_Cinema_FilmTypeFilm_Cinema_TypeFilm">
-            <End Role="Cinema_TypeFilm" EntitySet="Cinema_TypeFilm" />
-            <End Role="Cinema_FilmTypeFilm" EntitySet="Cinema_FilmTypeFilm" />
-          </AssociationSet>
+          <EntitySet Name="View_get_film_data" EntityType="Self.View_get_film_data" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_get_film_data].[id] AS [id], 
+    [View_get_film_data].[name] AS [name], 
+    [View_get_film_data].[description] AS [description], 
+    [View_get_film_data].[id_type_film] AS [id_type_film], 
+    [View_get_film_data].[name_type_film] AS [name_type_film], 
+    [View_get_film_data].[created_date] AS [created_date]
+    FROM [dbo].[View_get_film_data] AS [View_get_film_data]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
             <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
             <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Film" Association="Self.FK_Cinema_Ticket_Cinema_Film">
+            <End Role="Cinema_Film" EntitySet="Cinema_Film" />
+            <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_Room" Association="Self.FK_Cinema_Ticket_Cinema_Room">
             <End Role="Cinema_Room" EntitySet="Cinema_Room" />
@@ -293,6 +359,10 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_Showtime" Association="Self.FK_Cinema_Ticket_Cinema_Showtime">
             <End Role="Cinema_Showtime" EntitySet="Cinema_Showtime" />
+            <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Staff" Association="Self.FK_Cinema_Ticket_Cinema_Staff">
+            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
             <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_TypeTick" Association="Self.FK_Cinema_Ticket_Cinema_TypeTick">
@@ -312,20 +382,10 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             <End Role="Cinema_WorkingPlan" EntitySet="Cinema_WorkingPlan" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Cinema_Film">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Cinema_TypeFilm" Relationship="Self.Cinema_FilmTypeFilm" FromRole="Cinema_Film" ToRole="Cinema_TypeFilm" />
-        </EntityType>
         <EntityType Name="Cinema_Popcorn">
           <Key>
             <PropertyRef Name="id" />
@@ -365,6 +425,7 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <Property Name="phone" Type="Int32" Nullable="false" />
           <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cinema_Type_Staff" Relationship="Self.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Type_Staff" />
+          <NavigationProperty Name="Cinema_Ticket" Relationship="Self.FK_Cinema_Ticket_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Ticket" />
           <NavigationProperty Name="Cinema_WorkingPlan" Relationship="Self.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_WorkingPlan" />
         </EntityType>
         <EntityType Name="Cinema_Ticket">
@@ -374,17 +435,23 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             <PropertyRef Name="id_sc" />
             <PropertyRef Name="id_user" />
             <PropertyRef Name="id_type_tick" />
+            <PropertyRef Name="id_film" />
+            <PropertyRef Name="id_nv" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_pc" Type="Int32" Nullable="false" />
           <Property Name="id_sc" Type="Int32" Nullable="false" />
           <Property Name="id_user" Type="Int32" Nullable="false" />
           <Property Name="id_type_tick" Type="Int32" Nullable="false" />
+          <Property Name="id_film" Type="Int32" Nullable="false" />
+          <Property Name="id_nv" Type="Int32" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Cinema_Room" Relationship="Self.FK_Cinema_Ticket_Cinema_Room" FromRole="Cinema_Ticket" ToRole="Cinema_Room" />
           <NavigationProperty Name="Cinema_Showtime" Relationship="Self.FK_Cinema_Ticket_Cinema_Showtime" FromRole="Cinema_Ticket" ToRole="Cinema_Showtime" />
+          <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_Ticket_Cinema_Staff" FromRole="Cinema_Ticket" ToRole="Cinema_Staff" />
           <NavigationProperty Name="Cinema_TypeTick" Relationship="Self.FK_Cinema_Ticket_Cinema_TypeTick" FromRole="Cinema_Ticket" ToRole="Cinema_TypeTick" />
           <NavigationProperty Name="Cinema_User" Relationship="Self.FK_Cinema_Ticket_Cinema_User" FromRole="Cinema_Ticket" ToRole="Cinema_User" />
+          <NavigationProperty Name="Cinema_Film" Relationship="CinemaModel.FK_Cinema_Ticket_Cinema_Film" FromRole="Cinema_Ticket" ToRole="Cinema_Film" />
         </EntityType>
         <EntityType Name="Cinema_TrackingLogin">
           <Key>
@@ -403,15 +470,6 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <Property Name="id_type_staff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Type_Staff" ToRole="Cinema_Staff" />
-        </EntityType>
-        <EntityType Name="Cinema_TypeFilm">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Cinema_Film" Relationship="Self.Cinema_FilmTypeFilm" FromRole="Cinema_TypeFilm" ToRole="Cinema_Film" />
         </EntityType>
         <EntityType Name="Cinema_TypeTick">
           <Key>
@@ -454,15 +512,36 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <Property Name="standard_salary" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_WorkingPlan" ToRole="Cinema_Staff" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="get_ticket">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="id_pc" />
+            <PropertyRef Name="id_sc" />
+            <PropertyRef Name="id_user" />
+            <PropertyRef Name="id_type_tick" />
+            <PropertyRef Name="id_film" />
+            <PropertyRef Name="PC_Name" />
+            <PropertyRef Name="SC_Name" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="TT_Name" />
+            <PropertyRef Name="FI_Name" />
+            <PropertyRef Name="id_nv" />
+            <PropertyRef Name="ST_Name" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_pc" Type="Int32" Nullable="false" />
+          <Property Name="id_sc" Type="Int32" Nullable="false" />
+          <Property Name="id_user" Type="Int32" Nullable="false" />
+          <Property Name="id_type_tick" Type="Int32" Nullable="false" />
+          <Property Name="id_film" Type="Int32" Nullable="false" />
+          <Property Name="PC_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SC_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TT_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FI_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="id_nv" Type="Int32" Nullable="false" />
+          <Property Name="ST_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="FK_Cinema_Ticket_Cinema_Room">
           <End Role="Cinema_Room" Type="Self.Cinema_Room" Multiplicity="1" />
@@ -497,6 +576,18 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             </Principal>
             <Dependent Role="Cinema_Staff">
               <PropertyRef Name="type_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cinema_Ticket_Cinema_Staff">
+          <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="1" />
+          <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_Ticket">
+              <PropertyRef Name="id_nv" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -548,12 +639,7 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Cinema_FilmTypeFilm">
-          <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="*" />
-          <End Role="Cinema_TypeFilm" Type="Self.Cinema_TypeFilm" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="CinemaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cinema_Film" EntityType="Self.Cinema_Film" />
           <EntitySet Name="Cinema_Popcorn" EntityType="Self.Cinema_Popcorn" />
           <EntitySet Name="Cinema_Room" EntityType="Self.Cinema_Room" />
           <EntitySet Name="Cinema_Showtime" EntityType="Self.Cinema_Showtime" />
@@ -561,12 +647,11 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <EntitySet Name="Cinema_Ticket" EntityType="Self.Cinema_Ticket" />
           <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" />
           <EntitySet Name="Cinema_Type_Staff" EntityType="Self.Cinema_Type_Staff" />
-          <EntitySet Name="Cinema_TypeFilm" EntityType="Self.Cinema_TypeFilm" />
           <EntitySet Name="Cinema_TypeTick" EntityType="Self.Cinema_TypeTick" />
           <EntitySet Name="Cinema_User" EntityType="Self.Cinema_User" />
           <EntitySet Name="Cinema_Usertype" EntityType="Self.Cinema_Usertype" />
           <EntitySet Name="Cinema_WorkingPlan" EntityType="Self.Cinema_WorkingPlan" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="get_ticket" EntityType="Self.get_ticket" />
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_Room" Association="Self.FK_Cinema_Ticket_Cinema_Room">
             <End Role="Cinema_Room" EntitySet="Cinema_Room" />
             <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
@@ -578,6 +663,10 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
           <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
             <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
             <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Staff" Association="Self.FK_Cinema_Ticket_Cinema_Staff">
+            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+            <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_WorkingPlan_Cinema_Staff" Association="Self.FK_Cinema_WorkingPlan_Cinema_Staff">
             <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
@@ -595,26 +684,79 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
             <End Role="Cinema_Usertype" EntitySet="Cinema_Usertype" />
             <End Role="Cinema_User" EntitySet="Cinema_User" />
           </AssociationSet>
-          <AssociationSet Name="Cinema_FilmTypeFilm" Association="Self.Cinema_FilmTypeFilm">
+          <EntitySet Name="Cinema_Film" EntityType="CinemaModel.Cinema_Film" />
+          <EntitySet Name="View_get_film_data" EntityType="CinemaModel.View_get_film_data" />
+          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Film" Association="CinemaModel.FK_Cinema_Ticket_Cinema_Film">
             <End Role="Cinema_Film" EntitySet="Cinema_Film" />
-            <End Role="Cinema_TypeFilm" EntitySet="Cinema_TypeFilm" />
+            <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="CinemaModel.sysdiagram" />
+          <EntitySet Name="Cinema_TypeFilm" EntityType="CinemaModel.Cinema_TypeFilm" />
         </EntityContainer>
+        <EntityType Name="Cinema_Film">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="name_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cinema_Ticket" Relationship="CinemaModel.FK_Cinema_Ticket_Cinema_Film" FromRole="Cinema_Film" ToRole="Cinema_Ticket" />
+        </EntityType>
+        <EntityType Name="View_get_film_data">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="id_type_film" />
+            <PropertyRef Name="name_type_film" />
+            <PropertyRef Name="created_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Cinema_Ticket_Cinema_Film">
+          <End Type="CinemaModel.Cinema_Film" Role="Cinema_Film" Multiplicity="1" />
+          <End Type="CinemaModel.Cinema_Ticket" Role="Cinema_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Film">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_Ticket">
+              <PropertyRef Name="id_film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Cinema_TypeFilm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CinemaModelStoreContainer" CdmEntityContainer="CinemaEntities">
-          <EntitySetMapping Name="Cinema_Film">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_Film">
-              <MappingFragment StoreEntitySet="Cinema_Film">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cinema_Popcorn">
             <EntityTypeMapping TypeName="CinemaModel.Cinema_Popcorn">
               <MappingFragment StoreEntitySet="Cinema_Popcorn">
@@ -664,6 +806,8 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
                 <ScalarProperty Name="id_sc" ColumnName="id_sc" />
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
                 <ScalarProperty Name="id_type_tick" ColumnName="id_type_tick" />
+                <ScalarProperty Name="id_film" ColumnName="id_film" />
+                <ScalarProperty Name="id_nv" ColumnName="id_nv" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -684,15 +828,6 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
               <MappingFragment StoreEntitySet="Cinema_Type_Staff">
                 <ScalarProperty Name="id_type_staff" ColumnName="id_type_staff" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cinema_TypeFilm">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_TypeFilm">
-              <MappingFragment StoreEntitySet="Cinema_TypeFilm">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -736,25 +871,70 @@ warning 6002: The table/view 'Cinema.dbo.Cinema_FilmTypeFilm' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CinemaModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="get_ticket">
+            <EntityTypeMapping TypeName="CinemaModel.get_ticket">
+              <MappingFragment StoreEntitySet="get_ticket">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_pc" ColumnName="id_pc" />
+                <ScalarProperty Name="id_sc" ColumnName="id_sc" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_type_tick" ColumnName="id_type_tick" />
+                <ScalarProperty Name="id_film" ColumnName="id_film" />
+                <ScalarProperty Name="PC_Name" ColumnName="PC_Name" />
+                <ScalarProperty Name="SC_Name" ColumnName="SC_Name" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="TT_Name" ColumnName="TT_Name" />
+                <ScalarProperty Name="FI_Name" ColumnName="FI_Name" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="id_nv" ColumnName="id_nv" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Cinema_FilmTypeFilm" TypeName="CinemaModel.Cinema_FilmTypeFilm" StoreEntitySet="Cinema_FilmTypeFilm">
-            <EndProperty Name="Cinema_Film">
-              <ScalarProperty Name="id" ColumnName="id_film" />
-            </EndProperty>
-            <EndProperty Name="Cinema_TypeFilm">
-              <ScalarProperty Name="id" ColumnName="id_typefilm" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="Cinema_Film">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_Film">
+              <MappingFragment StoreEntitySet="Cinema_Film">
+                <ScalarProperty Name="name_type_film" ColumnName="name_type_film" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="id_type_film" ColumnName="id_type_film" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_get_film_data">
+            <EntityTypeMapping TypeName="CinemaModel.View_get_film_data">
+              <MappingFragment StoreEntitySet="View_get_film_data">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="name_type_film" ColumnName="name_type_film" />
+                <ScalarProperty Name="id_type_film" ColumnName="id_type_film" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CinemaModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cinema_TypeFilm">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_TypeFilm">
+              <MappingFragment StoreEntitySet="Cinema_TypeFilm">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
