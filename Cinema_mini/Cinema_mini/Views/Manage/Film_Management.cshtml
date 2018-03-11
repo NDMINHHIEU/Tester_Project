@@ -36,7 +36,7 @@
             responsive: true
         });
         $('.panel').lobiPanel();
-        $('#sl_typefilm').select2({placeholder: "Chọn thể loại"});
+        $('#sl_typefilm').select2({ placeholder: "Chọn thể loại" });
     });
 </script>
 <!-- table -->
@@ -47,7 +47,9 @@
         </div>
     </div>
     <div class="panel-body">
-        <br clear="all" /><br clear="all" />
+        <button class="btn btn-primary" id="btn_add">Thêm</button>
+        <br clear="all" />
+        <br clear="all" />
         <table id="data-table-film" class="display table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -63,7 +65,7 @@
     <!-- Modal -->
     
         <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+           <div class="modal-dialog">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -73,17 +75,24 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="inp_filmname">Tên phim: </label>
+                            <label for="inp_filmname">Tên phim: <b style="color:red">(*)</b></label>
                             <input class="form-control" id="inp_filmname" type="text" />
                         </div>
                         <div class="col-md-6">
-                            <label for="sl_typefilm">Thể loại: </label>
+                            <label for="sl_typefilm">Thể loại: <b style="color:red">(*)</b></label>
                             <select id="sl_typefilm" class="js-example-basic-multiple form-control" multiple="multiple">
                                 @foreach (var item in ViewBag.typefilm)
                                 {
                                              <option value="@item.id">@item.name</option>
                                 }
                             </select>
+                        </div>
+                    </div>
+                    <br clear="all" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="txt_des">Mô tả:</label>
+                            <textarea class="form-control" id="txt_des"></textarea>
                         </div>
                     </div>
                 </div>
@@ -96,5 +105,4 @@
 
         </div>
     </div>
-         
 </div>

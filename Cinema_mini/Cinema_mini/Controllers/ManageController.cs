@@ -167,6 +167,7 @@ namespace Cinema_mini.Controllers
             {
                 Services_1 msg = new Services_1();
                 int id = Int32.Parse(Request.Form["id_film"]);
+                string des_film = Request.Form["des"];
                 string name_film = Request.Form["name"];
                 var type_film = Request.Form["type_film"].ToCharArray();
                 List<int> typefilm_list = new List<int>();
@@ -203,8 +204,16 @@ namespace Cinema_mini.Controllers
                 }
                 else
                 {
-                    msg.code = 0;
-                    msg.msg = "Film" + name_film + " khong ton tai";
+                    Cinema_Film film_added = new Cinema_Film();
+                    film_added.name = name_film;
+                    film_added.id_type_film = temp2;
+                    film_added.name_type_film = temp;
+                    film_added.created_date = DateTime.Now;
+                    film_added.description = des_film;
+                    db.Cinema_Film.Add(film_added);
+                    db.SaveChanges();
+                    msg.code = 1;
+                    msg.msg = "Luu thanh cong film " + name_film;
                 }
                 string json_result = JsonConvert.SerializeObject(msg, Formatting.Indented,
                                 new JsonSerializerSettings()

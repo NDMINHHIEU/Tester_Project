@@ -61,16 +61,25 @@
     $('#btn_save').click(function () {
         var filename = $('#inp_filmname').val();
         var typefilm = $('#sl_typefilm').val();
+        var desc = $('#txt_des').val();
+        if (filename === "" || typefilm === null) {
+            Lobibox.alert('warning', { msg: "Vui lòng không để thông tin phim trống" });
+            return;
+        }
         var arr = [];
         for (var i = 0; i < typefilm.length; i++) {
             arr.push(typefilm[i]);
         }
         console.log(arr);
+        debugger;
         var id = $('#inp_hidden_id').val();
+        if (id === "") {
+            id = 0;
+        }
         $.ajax({
             url: "Save_film",
             type: "post",
-            data: { "id_film": id, "name": filename, "type_film": JSON.stringify(arr) },
+            data: { "id_film": id, "name": filename, "type_film": JSON.stringify(arr), "des": desc},
             success: function (result) {
                 var a = JSON.parse(result);
                 console.log(a.msg);
@@ -85,6 +94,16 @@
                     });
                 }
                 $('#myModal').modal('hide');
+                $('#modal1').on('hidden.bs.modal', function (e) {
+                    $(this)
+                      .find("input,textarea,select")
+                         .val('')
+                         .end()
+                      .find("input[type=checkbox], input[type=radio]")
+                         .prop("checked", "")
+                         .end();
+                });
+                $("#sl_typefilm").select2("val", "");
                 $('#data-table-film').DataTable().ajax.reload();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -94,4 +113,8 @@
         });
     });
 
+    //btn add
+    $('#btn_add').click(function () {
+        $('#myModal').modal('show');
+    })
 });
