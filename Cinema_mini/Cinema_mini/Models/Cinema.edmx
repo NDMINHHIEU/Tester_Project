@@ -194,6 +194,20 @@ warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a pri
           <Property Name="name_type_film" Type="nvarchar(max)" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_get_pop_data">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="ammount" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ammount" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Cinema_Staff_Cinema_Type_Staff">
           <End Role="Cinema_Type_Staff" Type="Self.Cinema_Type_Staff" Multiplicity="1" />
           <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="*" />
@@ -344,6 +358,14 @@ warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a pri
     [View_get_film_data].[name_type_film] AS [name_type_film], 
     [View_get_film_data].[created_date] AS [created_date]
     FROM [dbo].[View_get_film_data] AS [View_get_film_data]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_get_pop_data" EntityType="Self.View_get_pop_data" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_get_pop_data].[id] AS [id], 
+    [View_get_pop_data].[name] AS [name], 
+    [View_get_pop_data].[description] AS [description], 
+    [View_get_pop_data].[ammount] AS [ammount]
+    FROM [dbo].[View_get_pop_data] AS [View_get_pop_data]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
             <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
@@ -692,6 +714,7 @@ warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a pri
           </AssociationSet>
           <EntitySet Name="sysdiagrams" EntityType="CinemaModel.sysdiagram" />
           <EntitySet Name="Cinema_TypeFilm" EntityType="CinemaModel.Cinema_TypeFilm" />
+          <EntitySet Name="View_get_pop_data" EntityType="CinemaModel.View_get_pop_data" />
         </EntityContainer>
         <EntityType Name="Cinema_Film">
           <Key>
@@ -750,6 +773,18 @@ warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a pri
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="View_get_pop_data">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="ammount" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ammount" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -929,6 +964,16 @@ warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a pri
           <EntitySetMapping Name="Cinema_TypeFilm">
             <EntityTypeMapping TypeName="CinemaModel.Cinema_TypeFilm">
               <MappingFragment StoreEntitySet="Cinema_TypeFilm">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_get_pop_data">
+            <EntityTypeMapping TypeName="CinemaModel.View_get_pop_data">
+              <MappingFragment StoreEntitySet="View_get_pop_data">
+                <ScalarProperty Name="ammount" ColumnName="ammount" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />

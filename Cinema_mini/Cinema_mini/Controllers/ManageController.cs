@@ -223,6 +223,148 @@ namespace Cinema_mini.Controllers
                 return json_result;
             }
         }
+
+        public string delete_film()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                Services_1 msg = new Services_1();
+                string json_return = "";
+                int id_film = Int32.Parse(Request.Form["id_film"].ToString());
+                var check = db.Cinema_Film.Where(r => r.id == id_film).SingleOrDefault();
+                if (check != null)
+                {
+                    db.Cinema_Film.Remove(check);
+                    db.SaveChanges();
+                    msg.code = 0;
+                    msg.msg = "Thanh cong";
+                }
+                else
+                {
+                    msg.code = 1;
+                    msg.msg = "Xoa that bai";
+                }
+                json_return = JsonConvert.SerializeObject(msg);
+                return json_return;
+            }
+        }
+        #endregion
+
+        #region quản lý thực phẩm
+
+        public ViewResult Popcorn_Magement()
+        {
+            //Get_NeededIn4_Pop();
+            return View();
+        }
+
+        public string Get_pop_data()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                var film = db.View_get_pop_data.ToList();
+                string json_result = JsonConvert.SerializeObject(film, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                return json_result;
+            }
+        }
+
+        public string get_info_pop()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                string json_result = "";
+                Services_1 msg = new Services_1();
+                int id_pop = Int32.Parse(Request.Form["id_pop"]);
+                var pop = db.Cinema_Popcorn.Where(r => r.id == id_pop).SingleOrDefault();
+                if (pop != null)
+                {
+                    json_result = JsonConvert.SerializeObject(pop, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                }
+                return json_result;
+            }
+        }
+
+        public string delete_pop()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                Services_1 msg = new Services_1();
+                string json_return = "";
+                int id_pop = Int32.Parse(Request.Form["id_pop"].ToString());
+                var check = db.Cinema_Popcorn.Where(r => r.id == id_pop).SingleOrDefault();
+                if (check != null)
+                {
+                    db.Cinema_Popcorn.Remove(check);
+                    db.SaveChanges();
+                    msg.code = 0;
+                    msg.msg = "Thanh cong";
+                }
+                else
+                {
+                    msg.code = 1;
+                    msg.msg = "Xoa that bai";
+                }
+                json_return = JsonConvert.SerializeObject(msg);
+                return json_return;
+            }
+        }
+
+        public string Save_pop()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                Services_1 msg = new Services_1();
+                int id = Int32.Parse(Request.Form["id_pop"]);
+                string des_pop = Request.Form["des"];
+                int ammount = Int32.Parse(Request.Form["amm"]);
+                string name_pop = Request.Form["name"];
+                var pop = db.Cinema_Popcorn.Where(r => r.id == id).SingleOrDefault();
+                if (pop != null)
+                {
+                    pop.name = name_pop;
+                    pop.ammount = ammount;
+                    pop.description = des_pop;
+                    db.SaveChanges();
+                    msg.code = 1;
+                    msg.msg = "Luu thanh cong film " + name_pop;
+                }
+                else
+                {
+                    Cinema_Popcorn pop_added = new Cinema_Popcorn();
+                    pop_added.name = name_pop;
+                    pop_added.ammount = ammount;
+                    pop_added.description = des_pop;
+                    db.Cinema_Popcorn.Add(pop_added);
+                    db.SaveChanges();
+                    msg.code = 1;
+                    msg.msg = "Luu thanh cong film " + name_pop;
+                }
+                string json_result = JsonConvert.SerializeObject(msg, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                }); ;
+                return json_result;
+            }
+        }
+
+        //private void Get_NeededIn4_Pop()
+        //{
+        //    using (CinemaEntities db = new CinemaEntities())
+        //    {
+        //        var data = db.View_get_pop_data.ToList();
+        //        ViewBag.pop = data;
+        //    }
+        //}
+
         #endregion
     }
 }

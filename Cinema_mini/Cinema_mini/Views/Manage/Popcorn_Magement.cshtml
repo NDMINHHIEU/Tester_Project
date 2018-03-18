@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Popcorn_Magement";
+    Layout = "~/Views/Shared/Master_Admin_Page.cshtml";
+}
+<script src="~/Content/lobi/js/plugin/select2/select2.min.js"></script>
+<script src="~/Content/Pop_JS.js"></script>
+<script>
+    //datatable
+    $(document).ready(function () {
+        $('#data-table-pop').DataTable({
+            "ajax": {
+                "url": "Get_pop_data",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "description" },
+                { "data": "ammount" }
+            ],
+            "language": {
+                "processing": "<i class='fa-spinner fa-circle-o-notch></i>"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "render": function (data, type, row, meta) {
+                    return '<button id="edit_' + data + '" data-val="' + data + '" class="btn btn-edit btn-primary">Sửa</button> |'
+                        + ' <button id="edit_' + data + '" data-val="' + data + '" class="btn btn-remove btn-danger">Xóa</button>';
+                }
+            },
+            {"className": "text-center", "targets": 0}
+            ],
+            processing: true,
+            responsive: true
+        });
+        $('.panel').lobiPanel();
+    });
+</script>
+<!-- table -->
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h4 class="text-uppercase">Quản lý thực phẩm</h4>
+        </div>
+    </div>
+    <div class="panel-body">
+        <button class="btn btn-primary" id="btn_add">Thêm</button>
+        <br clear="all" />
+        <br clear="all" />
+        <table id="data-table-pop" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên thực phẩm</th>
+                    <th>Mô tả</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- Modal -->
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="inp_popname">Tên thực phẩm: <b style="color:red">(*)</b></label>
+                            <input class="form-control" id="inp_popname" type="text" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inp_popammount">Số lượng: <b style="color:red">(*)</b></label>
+                            <input class="form-control" id="inp_popammount" type="text" />
+                        </div>
+                    </div>
+                    <br clear="all" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="txt_des">Mô tả:</label>
+                            <textarea class="form-control" id="txt_des"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="inp_hidden_id" />
+                <div class="modal-footer">
+                    <button id="btn_save" type="button" class="btn btn-success">Lưu</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

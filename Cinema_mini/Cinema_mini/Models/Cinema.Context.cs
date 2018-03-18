@@ -41,5 +41,6 @@ namespace Cinema_mini.Models
         public virtual DbSet<View_get_film_data> View_get_film_data { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Cinema_TypeFilm> Cinema_TypeFilm { get; set; }
+        public virtual DbSet<View_get_pop_data> View_get_pop_data { get; set; }
     }
 }

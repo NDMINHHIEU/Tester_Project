@@ -273,6 +273,9 @@
     <Compile Include="Models\View_get_film_data.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_get_pop_data.cs">
+      <DependentUpon>Cinema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Services_1.cs" />
     <Compile Include="Startup.cs" />
@@ -2520,6 +2523,7 @@
     <Content Include="Content\lobi\sound\lobibox\sound4.mp3" />
     <Content Include="Content\lobi\sound\lobibox\sound5.mp3" />
     <Content Include="Content\lobi\sound\lobibox\sound6.mp3" />
+    <Content Include="Content\Pop_JS.js" />
     <Content Include="Content\Ticket_JS.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -4060,6 +4064,7 @@
     <Content Include="Views\GUI\Show_error.cshtml" />
     <Content Include="Views\Manage\Ticket_Management.cshtml" />
     <Content Include="Views\Manage\Film_Management.cshtml" />
+    <Content Include="Views\Manage\Popcorn_Magement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

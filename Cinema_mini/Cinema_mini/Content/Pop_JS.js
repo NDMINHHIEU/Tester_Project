@@ -1,43 +1,43 @@
 ﻿$(document).ready(function () {
     //btn edit
-    $('#data-table-film').on('click', '.btn-edit', function () {
-        var id_film = $(this).attr("data-val");
+    $('#data-table-pop').on('click', '.btn-edit', function () {
+        var id_pop = $(this).attr("data-val");
         $.ajax({
-            url: "get_info_film",
+            url: "get_info_pop",
             type: "post",
-            data:{"id_film":id_film},
+            data: { "id_pop": id_pop },
             success: function (result) {
                 console.log(result);
                 var a = JSON.parse(result);
                 if (a != null) {
-                    var string_typefilm = a.id_type_film;
-                    var array = string_typefilm.split(',');
-                    $('#sl_typefilm').select2("val", array);
-                    $('#inp_hidden_id').val(id_film);
-                    $('#inp_filmname').val(a.name);
-                    $('.modal-title').text("Sửa phim " + a.name);
+                    $('#inp_hidden_id').val(id_pop);
+                    $('#inp_popname').val(a.name);
+                    $('#inp_popammount').val(a.ammount);
+                    $('#txt_des').val(a.description);
+                    $('.modal-title').text("Sửa thực phẩm " + a.name);
                     $('#myModal').modal('show');
                 }
                 else {
                     Lobibox.notify('error', {
                         msg: "Không tìm thấy dữ liệu nào phù hợp"
                     });
-                } 
+                }
             }
         });
     });
 
     //btn delete
-    $('#data-table-film').on('click', '.btn-remove', function () {
-        var id_film = $(this).attr("data-val");
+    $('#data-table-pop').on('click', '.btn-remove', function () {
+        var id_pop = $(this).attr('data-val');
+        console.log(id_pop);
         Lobibox.confirm({
             msg: "Bạn có chắc muốn xóa ?",
             callback: function ($this, type, ev) {
                 if (type === 'yes') {
                     $.ajax({
-                        url: "delete_film",
+                        url: "delete_pop",
                         type: "post",
-                        data: { "id_film": id_film },
+                        data: { "id_pop": id_pop },
                         success: function (result) {
                             var a = JSON.parse(result);
                             if (a.code == 0) {
@@ -50,6 +50,7 @@
                                     msg: a.msg
                                 });
                             }
+                            $('#data-table-pop').DataTable().ajax.reload();
                         }
                     });
                 }
@@ -59,27 +60,21 @@
 
     //btn save
     $('#btn_save').click(function () {
-        var filename = $('#inp_filmname').val();
-        var typefilm = $('#sl_typefilm').val();
+        var popname = $('#inp_popname').val();
+        var ammount = $('#inp_popammount').val();
         var desc = $('#txt_des').val();
-        if (filename === "" || typefilm === null) {
-            Lobibox.alert('warning', { msg: "Vui lòng không để thông tin phim trống" });
+        if (popname === "") {
+            Lobibox.alert('warning', { msg: "Vui lòng không để thông tin trống" });
             return;
         }
-        var arr = [];
-        for (var i = 0; i < typefilm.length; i++) {
-            arr.push(typefilm[i]);
-        }
-        console.log(arr);
-        debugger;
         var id = $('#inp_hidden_id').val();
         if (id === "") {
             id = 0;
         }
         $.ajax({
-            url: "Save_film",
+            url: "Save_pop",
             type: "post",
-            data: { "id_film": id, "name": filename, "type_film": JSON.stringify(arr), "des": desc},
+            data: { "id_pop": id, "name": popname, "des": desc, "amm": ammount },
             success: function (result) {
                 var a = JSON.parse(result);
                 console.log(a.msg);
@@ -103,8 +98,7 @@
                          .prop("checked", "")
                          .end();
                 });
-                $("#sl_typefilm").select2("val", "");
-                $('#data-table-film').DataTable().ajax.reload();
+                $('#data-table-pop').DataTable().ajax.reload();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
@@ -117,4 +111,4 @@
     $('#btn_add').click(function () {
         $('#myModal').modal('show');
     })
-});
+})
