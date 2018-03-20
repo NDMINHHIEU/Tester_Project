@@ -12,16 +12,14 @@ namespace Cinema_mini.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cinema_WorkingPlan
+    public partial class View_get_staff
     {
         public int id { get; set; }
-        public int id_nv { get; set; }
-        public System.DateTime check_in { get; set; }
-        public System.DateTime check_out { get; set; }
-        public int actual_wkd { get; set; }
-        public int standard_salary { get; set; }
-        public string actual_salary { get; set; }
-    
-        public virtual Cinema_Staff Cinema_Staff { get; set; }
+        public string name { get; set; }
+        public int phone { get; set; }
+        public string address { get; set; }
+        public int type_staff { get; set; }
+        public string name_staff { get; set; }
+        public string status { get; set; }
     }
 }

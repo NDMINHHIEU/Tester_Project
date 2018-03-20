@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CinemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cinema_Film">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="id_type_film" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="name_type_film" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Popcorn">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ammount" Type="int" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Room">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="numberseat" Type="int" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Showtime">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="start" Type="time" Precision="7" Nullable="false" />
+    <Property Name="end" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Staff">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="type_staff" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="int" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Ticket">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="id_pc" />
+      <PropertyRef Name="id_sc" />
+      <PropertyRef Name="id_user" />
+      <PropertyRef Name="id_type_tick" />
+      <PropertyRef Name="id_film" />
+      <PropertyRef Name="id_nv" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_pc" Type="int" Nullable="false" />
+    <Property Name="id_sc" Type="int" Nullable="false" />
+    <Property Name="id_user" Type="int" Nullable="false" />
+    <Property Name="id_type_tick" Type="int" Nullable="false" />
+    <Property Name="id_film" Type="int" Nullable="false" />
+    <Property Name="id_nv" Type="int" Nullable="false" />
+    <Property Name="created_date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Cinema_TrackingLogin">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="time_created" Type="datetime" Nullable="false" />
+    <Property Name="duration_expired" Type="datetime" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Type_Staff">
+    <Key>
+      <PropertyRef Name="id_type_staff" />
+    </Key>
+    <Property Name="id_type_staff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_TypeFilm">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_TypeTick">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="discount" Type="float" Nullable="false" />
+    <Property Name="prize" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="pass" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="type" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_Usertype">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinema_WorkingPlan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_nv" Type="int" Nullable="false" />
+    <Property Name="check_in" Type="datetime" Nullable="false" />
+    <Property Name="check_out" Type="datetime" Nullable="false" />
+    <Property Name="actual_wkd" Type="int" Nullable="false" />
+    <Property Name="standard_salary" Type="int" Nullable="false" />
+    <Property Name="actual_salary" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.get_ticket' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="get_ticket">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="id_pc" />
+      <PropertyRef Name="id_sc" />
+      <PropertyRef Name="id_user" />
+      <PropertyRef Name="id_type_tick" />
+      <PropertyRef Name="id_film" />
+      <PropertyRef Name="PC_Name" />
+      <PropertyRef Name="SC_Name" />
+      <PropertyRef Name="username" />
+      <PropertyRef Name="TT_Name" />
+      <PropertyRef Name="FI_Name" />
+      <PropertyRef Name="id_nv" />
+      <PropertyRef Name="ST_Name" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_pc" Type="int" Nullable="false" />
+    <Property Name="id_sc" Type="int" Nullable="false" />
+    <Property Name="id_user" Type="int" Nullable="false" />
+    <Property Name="id_type_tick" Type="int" Nullable="false" />
+    <Property Name="id_film" Type="int" Nullable="false" />
+    <Property Name="PC_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SC_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TT_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FI_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="created_date" Type="datetime" />
+    <Property Name="id_nv" Type="int" Nullable="false" />
+    <Property Name="ST_Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_film_data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_get_film_data">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="description" />
+      <PropertyRef Name="id_type_film" />
+      <PropertyRef Name="name_type_film" />
+      <PropertyRef Name="created_date" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="id_type_film" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="name_type_film" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_get_pop_data">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="description" />
+      <PropertyRef Name="ammount" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ammount" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_staff' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_get_staff">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="phone" />
+      <PropertyRef Name="address" />
+      <PropertyRef Name="type_staff" />
+      <PropertyRef Name="name_staff" />
+      <PropertyRef Name="status" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="int" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="type_staff" Type="int" Nullable="false" />
+    <Property Name="name_staff" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_staff_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_get_staff_info">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="phone" />
+      <PropertyRef Name="address" />
+      <PropertyRef Name="type_staff" />
+      <PropertyRef Name="name_type_staff" />
+      <PropertyRef Name="check_in" />
+      <PropertyRef Name="check_out" />
+      <PropertyRef Name="actual_wkd" />
+      <PropertyRef Name="standard_salary" />
+      <PropertyRef Name="actual_salary" />
+      <PropertyRef Name="status" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="int" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="type_staff" Type="int" Nullable="false" />
+    <Property Name="name_type_staff" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="check_in" Type="datetime" Nullable="false" />
+    <Property Name="check_out" Type="datetime" Nullable="false" />
+    <Property Name="actual_wkd" Type="int" Nullable="false" />
+    <Property Name="standard_salary" Type="int" Nullable="false" />
+    <Property Name="actual_salary" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Cinema_Staff_Cinema_Type_Staff">
+    <End Role="Cinema_Type_Staff" Type="Self.Cinema_Type_Staff" Multiplicity="1" />
+    <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Type_Staff">
+        <PropertyRef Name="id_type_staff" />
+      </Principal>
+      <Dependent Role="Cinema_Staff">
+        <PropertyRef Name="type_staff" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_Ticket_Cinema_Film">
+    <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="1" />
+    <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_Ticket">
+        <PropertyRef Name="id_film" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_Ticket_Cinema_Room">
+    <End Role="Cinema_Room" Type="Self.Cinema_Room" Multiplicity="1" />
+    <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Room">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_Ticket">
+        <PropertyRef Name="id_pc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_Ticket_Cinema_Showtime">
+    <End Role="Cinema_Showtime" Type="Self.Cinema_Showtime" Multiplicity="1" />
+    <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Showtime">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_Ticket">
+        <PropertyRef Name="id_sc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_Ticket_Cinema_Staff">
+    <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="1" />
+    <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Staff">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_Ticket">
+        <PropertyRef Name="id_nv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_Ticket_Cinema_TypeTick">
+    <End Role="Cinema_TypeTick" Type="Self.Cinema_TypeTick" Multiplicity="1" />
+    <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_TypeTick">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_Ticket">
+        <PropertyRef Name="id_type_tick" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_Ticket_Cinema_User">
+    <End Role="Cinema_User" Type="Self.Cinema_User" Multiplicity="1" />
+    <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_Ticket">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_User_Cinema_Usertype">
+    <End Role="Cinema_Usertype" Type="Self.Cinema_Usertype" Multiplicity="1" />
+    <End Role="Cinema_User" Type="Self.Cinema_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Usertype">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_User">
+        <PropertyRef Name="type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cinema_WorkingPlan_Cinema_Staff">
+    <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="1" />
+    <End Role="Cinema_WorkingPlan" Type="Self.Cinema_WorkingPlan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema_Staff">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cinema_WorkingPlan">
+        <PropertyRef Name="id_nv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CinemaModelStoreContainer">
+    <EntitySet Name="Cinema_Film" EntityType="Self.Cinema_Film" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Popcorn" EntityType="Self.Cinema_Popcorn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Room" EntityType="Self.Cinema_Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Showtime" EntityType="Self.Cinema_Showtime" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Staff" EntityType="Self.Cinema_Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Ticket" EntityType="Self.Cinema_Ticket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Type_Staff" EntityType="Self.Cinema_Type_Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_TypeFilm" EntityType="Self.Cinema_TypeFilm" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_TypeTick" EntityType="Self.Cinema_TypeTick" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_User" EntityType="Self.Cinema_User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_Usertype" EntityType="Self.Cinema_Usertype" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cinema_WorkingPlan" EntityType="Self.Cinema_WorkingPlan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="get_ticket" EntityType="Self.get_ticket" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [get_ticket].[id] AS [id], 
+    [get_ticket].[id_pc] AS [id_pc], 
+    [get_ticket].[id_sc] AS [id_sc], 
+    [get_ticket].[id_user] AS [id_user], 
+    [get_ticket].[id_type_tick] AS [id_type_tick], 
+    [get_ticket].[id_film] AS [id_film], 
+    [get_ticket].[PC_Name] AS [PC_Name], 
+    [get_ticket].[SC_Name] AS [SC_Name], 
+    [get_ticket].[username] AS [username], 
+    [get_ticket].[TT_Name] AS [TT_Name], 
+    [get_ticket].[FI_Name] AS [FI_Name], 
+    [get_ticket].[created_date] AS [created_date], 
+    [get_ticket].[id_nv] AS [id_nv], 
+    [get_ticket].[ST_Name] AS [ST_Name]
+    FROM [dbo].[get_ticket] AS [get_ticket]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_get_film_data" EntityType="Self.View_get_film_data" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_get_film_data].[id] AS [id], 
+    [View_get_film_data].[name] AS [name], 
+    [View_get_film_data].[description] AS [description], 
+    [View_get_film_data].[id_type_film] AS [id_type_film], 
+    [View_get_film_data].[name_type_film] AS [name_type_film], 
+    [View_get_film_data].[created_date] AS [created_date]
+    FROM [dbo].[View_get_film_data] AS [View_get_film_data]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_get_pop_data" EntityType="Self.View_get_pop_data" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_get_pop_data].[id] AS [id], 
+    [View_get_pop_data].[name] AS [name], 
+    [View_get_pop_data].[description] AS [description], 
+    [View_get_pop_data].[ammount] AS [ammount]
+    FROM [dbo].[View_get_pop_data] AS [View_get_pop_data]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_get_staff" EntityType="Self.View_get_staff" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_get_staff].[id] AS [id], 
+    [View_get_staff].[name] AS [name], 
+    [View_get_staff].[phone] AS [phone], 
+    [View_get_staff].[address] AS [address], 
+    [View_get_staff].[type_staff] AS [type_staff], 
+    [View_get_staff].[name_staff] AS [name_staff], 
+    [View_get_staff].[status] AS [status]
+    FROM [dbo].[View_get_staff] AS [View_get_staff]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_get_staff_info" EntityType="Self.View_get_staff_info" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_get_staff_info].[id] AS [id], 
+    [View_get_staff_info].[name] AS [name], 
+    [View_get_staff_info].[phone] AS [phone], 
+    [View_get_staff_info].[address] AS [address], 
+    [View_get_staff_info].[type_staff] AS [type_staff], 
+    [View_get_staff_info].[name_type_staff] AS [name_type_staff], 
+    [View_get_staff_info].[check_in] AS [check_in], 
+    [View_get_staff_info].[check_out] AS [check_out], 
+    [View_get_staff_info].[actual_wkd] AS [actual_wkd], 
+    [View_get_staff_info].[standard_salary] AS [standard_salary], 
+    [View_get_staff_info].[actual_salary] AS [actual_salary], 
+    [View_get_staff_info].[status] AS [status]
+    FROM [dbo].[View_get_staff_info] AS [View_get_staff_info]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
+      <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
+      <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_Ticket_Cinema_Film" Association="Self.FK_Cinema_Ticket_Cinema_Film">
+      <End Role="Cinema_Film" EntitySet="Cinema_Film" />
+      <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_Ticket_Cinema_Room" Association="Self.FK_Cinema_Ticket_Cinema_Room">
+      <End Role="Cinema_Room" EntitySet="Cinema_Room" />
+      <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_Ticket_Cinema_Showtime" Association="Self.FK_Cinema_Ticket_Cinema_Showtime">
+      <End Role="Cinema_Showtime" EntitySet="Cinema_Showtime" />
+      <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_Ticket_Cinema_Staff" Association="Self.FK_Cinema_Ticket_Cinema_Staff">
+      <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+      <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_Ticket_Cinema_TypeTick" Association="Self.FK_Cinema_Ticket_Cinema_TypeTick">
+      <End Role="Cinema_TypeTick" EntitySet="Cinema_TypeTick" />
+      <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_Ticket_Cinema_User" Association="Self.FK_Cinema_Ticket_Cinema_User">
+      <End Role="Cinema_User" EntitySet="Cinema_User" />
+      <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_User_Cinema_Usertype" Association="Self.FK_Cinema_User_Cinema_Usertype">
+      <End Role="Cinema_Usertype" EntitySet="Cinema_Usertype" />
+      <End Role="Cinema_User" EntitySet="Cinema_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cinema_WorkingPlan_Cinema_Staff" Association="Self.FK_Cinema_WorkingPlan_Cinema_Staff">
+      <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+      <End Role="Cinema_WorkingPlan" EntitySet="Cinema_WorkingPlan" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

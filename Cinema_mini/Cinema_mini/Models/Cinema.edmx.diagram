@@ -4,33 +4,35 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7a0f415564d54f66b8476d3211a6738c" Name="Diagram1">
+      <Diagram DiagramId="945ee68d5ef141668ad58af147964ad2" Name="Diagram1">
+        <EntityTypeShape EntityType="CinemaModel.Cinema_Film" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaModel.Cinema_Popcorn" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_Room" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_Showtime" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_Staff" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_Room" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_Showtime" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaModel.Cinema_Ticket" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaModel.Cinema_TrackingLogin" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaModel.Cinema_Type_Staff" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_TypeTick" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_User" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_Usertype" Width="1.5" PointX="0.75" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_WorkingPlan" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_TypeFilm" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_TypeTick" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_User" Width="1.5" PointX="3" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_Usertype" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.sysdiagram" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaModel.get_ticket" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.View_get_film_data" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaModel.View_get_pop_data" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_Film" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_Room" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_Showtime" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaModel.FK_Cinema_Staff_Cinema_Type_Staff" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_Staff" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaModel.FK_Cinema_WorkingPlan_Cinema_Staff" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_TypeTick" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_User" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaModel.FK_Cinema_User_Cinema_Usertype" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_Film" Width="1.5" PointX="7.375" PointY="6" />
-        <EntityTypeShape EntityType="CinemaModel.View_get_film_data" Width="1.5" PointX="7.375" PointY="9.75" />
-        <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_Film" />
-        <EntityTypeShape EntityType="CinemaModel.sysdiagram" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="CinemaModel.Cinema_TypeFilm" Width="1.5" PointX="9.375" PointY="5.75" />
-        <EntityTypeShape EntityType="CinemaModel.View_get_pop_data" Width="1.5" PointX="9.375" PointY="8.75" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_WorkingPlan" Width="1.5" PointX="5.25" PointY="7.25" />
+        <EntityTypeShape EntityType="CinemaModel.Cinema_Staff" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="CinemaModel.View_get_staff_info" Width="1.5" PointX="10.375" PointY="8.75" />
+        <AssociationConnector Association="CinemaModel.FK_Cinema_Staff_Cinema_Type_Staff" />
+        <AssociationConnector Association="CinemaModel.FK_Cinema_Ticket_Cinema_Staff" />
+        <AssociationConnector Association="CinemaModel.FK_Cinema_WorkingPlan_Cinema_Staff" />
+        <EntityTypeShape EntityType="CinemaModel.View_get_staff" Width="1.5" PointX="12.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

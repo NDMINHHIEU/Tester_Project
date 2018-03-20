@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "WKP_Management";
+    Layout = "~/Views/Shared/Master_Admin_Page.cshtml";
+}
+<script src="~/Content/Staff_JS.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#data-table-staff1').DataTable({
+            "ajax": {
+                "url": "Get_staff2_data",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "phone" },
+                { "data": "address" },
+                { "data": "type_staff" },
+                { "data": "name_type_staff" },
+                { "data": "check_in" },
+                { "data": "check_out" },
+                { "data": "actual_wkd" },
+                { "data": "standard_salary" },
+                { "data": "actual_salary" },
+                { "data": "status" }
+            ],
+            "language": {
+                "processing": "<i class='fa-spinner fa-circle-o-notch></i>"
+            },
+            "columnDefs": [
+            {
+                "targets": 11,
+                "render": function (data, type, row, meta) {
+                    if (data == "Deactived") {
+                        return "<label style='color:red'>" + data + "</label>";
+                    }
+                    else return data;
+                }
+            }
+            ,
+             { "width": "120", "targets": "all" },
+            { "className": "text-center", "targets": 0 }
+            ],
+            processing: true,
+            responsive: true
+        });
+        $('.panel').lobiPanel();
+    })
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-uppercase">Quản lý công</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table id="data-table-staff1" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên nhân viên</th>
+                                <th>Điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Code chức vụ</th>
+                                <th>Chức vụ</th>
+                                <th>Check in</th>
+                                <th>Check out</th>
+                                <th>Ngày công thực</th>
+                                <th>Lương cản bản</th>
+                                <th>Lương thực tế</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

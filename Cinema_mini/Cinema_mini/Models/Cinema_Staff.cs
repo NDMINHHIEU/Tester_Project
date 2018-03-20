@@ -26,6 +26,7 @@ namespace Cinema_mini.Models
         public string name { get; set; }
         public int phone { get; set; }
         public string address { get; set; }
+        public string status { get; set; }
     
         public virtual Cinema_Type_Staff Cinema_Type_Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

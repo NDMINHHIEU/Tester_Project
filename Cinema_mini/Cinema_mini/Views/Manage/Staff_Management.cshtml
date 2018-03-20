@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Staff_Management";
+    Layout = "~/Views/Shared/Master_Admin_Page.cshtml";
+}
+<script src="~/Content/lobi/js/plugin/select2/select2.min.js"></script>
+<script src="~/Content/Staff_JS.js"></script>
+<script>
+    //datatable
+    $(document).ready(function () {
+        $('#data-table-staff').DataTable({
+            "ajax": {
+                "url": "Get_staff_data",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "phone" },
+                { "data": "address" },
+                { "data": "type_staff" },
+                { "data": "name_staff" },
+                { "data": "status" }
+            ],
+            "language": {
+                "processing": "<i class='fa-spinner fa-circle-o-notch></i>"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "render": function (data, type, row, meta) {
+                    return '<button id="edit_' + data + '" data-val="' + data + '" class="btn btn-edit btn-primary">Sửa</button> |'
+                        + ' <button id="edit_' + data + '" data-val="' + data + '" class="btn btn-remove btn-danger">Khóa</button>';
+                }
+            },
+            {
+                "targets": 6,
+                "render": function (data, type, row, meta) {
+                    if (data == "Deactived") {
+                        return "<label style='color:red'>" + data + "</label>";
+                    }
+                    else return data;
+                }
+            },
+             { "width": "120", "targets": 0 },
+            {"className": "text-center", "targets": 0}
+            ],
+            processing: true,
+            responsive: true
+        });
+        $('.panel').lobiPanel();
+        $('#sl_typestaff').select2({ placeholder: "Chọn loại" });
+    });
+</script>
+                  <br /><br />
+<!-- table -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-uppercase">Quản lý nhân viên</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <button class="btn btn-primary" id="btn_add">Thêm</button>
+                    <br clear="all" />
+                    <br clear="all" />
+                    <table id="data-table-staff" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên nhân viên</th>
+                                <th>Điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Code chức vụ</th>
+                                <th>Chức vụ</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+                <!-- Modal -->
+
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="inp_staffname">Tên nhân viên: <b style="color:red">(*)</b></label>
+                                        <input class="form-control" id="inp_staffname" type="text" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inp_phone">Số điện thoại: <b style="color:red">(*)</b></label>
+                                        <input class="form-control" id="inp_phone" type="text" />
+                                    </div>
+                                </div>
+                                <br clear="all" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="inp_address">Địa chỉ: <b style="color:red">(*)</b></label>
+                                        <input class="form-control" id="inp_address" type="text" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="sl_typestaff">Trạng thái: <b style="color:red">(*)</b></label>
+                                        <select id="sl_typestaff" class="js-example-basic-multiple form-control">
+                                            @foreach (var item in ViewBag.typestaff)
+                                            {
+                                                <option value="@item.id_type_staff">@item.name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <br clear="all" />
+                            </div>
+                            <input type="hidden" id="inp_hidden_id" />
+                            <div class="modal-footer">
+                                <button id="btn_save" type="button" class="btn btn-success">Lưu</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    
+</div>
+<br clear="all" />

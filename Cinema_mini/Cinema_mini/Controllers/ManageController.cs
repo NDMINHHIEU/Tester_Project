@@ -34,7 +34,7 @@ namespace Cinema_mini.Controllers
                 return View();
             }
         }
-        
+
         public string Get_ticket_data()
         {
             using (CinemaEntities db = new CinemaEntities())
@@ -71,7 +71,7 @@ namespace Cinema_mini.Controllers
                     msg.msg = "Xoa that bai";
                 }
                 json_return = JsonConvert.SerializeObject(msg);
-                return json_return; 
+                return json_return;
             }
         }
 
@@ -123,14 +123,14 @@ namespace Cinema_mini.Controllers
                 //type film
                 var list_typefilm = db.Cinema_TypeFilm.ToList();
                 ViewBag.typefilm = list_typefilm;
-                
+
             }
         }
-        
+
         public string Get_film_data()
         {
             using (CinemaEntities db = new CinemaEntities())
-            { 
+            {
                 var film = db.View_get_film_data.ToList();
                 string json_result = JsonConvert.SerializeObject(film, Formatting.Indented,
                                 new JsonSerializerSettings()
@@ -186,17 +186,17 @@ namespace Cinema_mini.Controllers
                 foreach (var item in typefilm_list)
                 {
                     var name_typefilm = db.Cinema_TypeFilm.Where(r => r.id == item).SingleOrDefault();
-                    if (name_typefilm!=null)
+                    if (name_typefilm != null)
                     {
                         temp += name_typefilm.name + ",";
                         temp2 += item + ",";
                     }
                 }
                 var film = db.Cinema_Film.Where(r => r.id == id).SingleOrDefault();
-                if (film!=null)
+                if (film != null)
                 {
                     film.name = name_film;
-                    film.id_type_film = temp2 ;
+                    film.id_type_film = temp2;
                     film.name_type_film = temp;
                     db.SaveChanges();
                     msg.code = 1;
@@ -364,6 +364,151 @@ namespace Cinema_mini.Controllers
         //        ViewBag.pop = data;
         //    }
         //}
+
+        #endregion
+
+        #region quản lý nhân viên
+
+        public ViewResult Staff_Management()
+        {
+            Get_type_staff();
+            return View();
+        }
+
+        private void Get_type_staff()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                //get all needed info
+                //type staff
+                var list_typestaff = db.Cinema_Type_Staff.ToList();
+                ViewBag.typestaff = list_typestaff;
+            }
+        }
+
+        public string Get_staff_data()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                var film = db.View_get_staff.ToList();
+                string json_result = JsonConvert.SerializeObject(film, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                return json_result;
+            }
+        }
+
+        public string Get_staff2_data()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                var film = db.View_get_staff_info.ToList();
+                string json_result = JsonConvert.SerializeObject(film, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                return json_result;
+            }
+        }
+
+        public string get_info_staff()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                string json_result = "";
+                Services_1 msg = new Services_1();
+                int id_staff = Int32.Parse(Request.Form["id_staff"]);
+                var staff = db.Cinema_Staff.Where(r => r.id == id_staff).SingleOrDefault();
+                if (staff != null)
+                {
+                    json_result = JsonConvert.SerializeObject(staff, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                }
+                return json_result;
+            }
+        }
+
+        public string delete_staff()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                Services_1 msg = new Services_1();
+                string json_return = "";
+                int id_staff = Int32.Parse(Request.Form["id_staff"].ToString());
+                var check = db.Cinema_Staff.Where(r => r.id == id_staff).SingleOrDefault();
+                if (check != null)
+                {
+                    check.status = "Deactived";
+                    db.SaveChanges();
+                    msg.code = 0;
+                    msg.msg = "Thanh cong";
+                }
+                else
+                {
+                    msg.code = 1;
+                    msg.msg = "Xoa that bai";
+                }
+                json_return = JsonConvert.SerializeObject(msg);
+                return json_return;
+            }
+        }
+
+        public string Save_staff()
+        {
+            using (CinemaEntities db = new CinemaEntities())
+            {
+                Services_1 msg = new Services_1();
+                int id = Int32.Parse(Request.Form["id_staff"]);
+                int type_staff = Int32.Parse(Request.Form["type_staff"]);
+                int phone = Int32.Parse(Request.Form["phone"]);
+                string address = Request.Form["address"];
+                string name_staff = Request.Form["name"];
+                var staff = db.Cinema_Staff.Where(r => r.id == id).SingleOrDefault();
+                if (staff != null)
+                {
+                    staff.name = name_staff;
+                    staff.phone = phone;
+                    staff.type_staff = type_staff;
+                    staff.address = address;
+                    staff.status = "Active";
+                    db.SaveChanges();
+                    msg.code = 1;
+                    msg.msg = "Luu thanh cong nhân viên " + name_staff;
+                }
+                else
+                {
+                    Cinema_Staff staff_added = new Cinema_Staff();
+                    staff_added.name = name_staff;
+                    staff_added.phone = phone;
+                    staff_added.type_staff = type_staff;
+                    staff_added.address = address;
+                    staff_added.status = "Active";
+                    db.Cinema_Staff.Add(staff_added);
+                    db.SaveChanges();
+                    msg.code = 1;
+                    msg.msg = "Luu thanh cong nhân viên " + name_staff;
+                }
+                string json_result = JsonConvert.SerializeObject(msg, Formatting.Indented,
+                                new JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                }); ;
+                return json_result;
+            }
+        }
+
+
+        #endregion
+
+        #region quản lý công
+
+        public ViewResult WKP_Management() { return View(); }
 
         #endregion
     }

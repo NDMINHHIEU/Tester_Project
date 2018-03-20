@@ -52,6 +52,7 @@
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="phone" Type="int" Nullable="false" />
           <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="status" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_Ticket">
           <Key>
@@ -128,10 +129,11 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_nv" Type="int" Nullable="false" />
-          <Property Name="check_in" Type="int" Nullable="false" />
-          <Property Name="check_out" Type="int" Nullable="false" />
+          <Property Name="check_in" Type="datetime" Nullable="false" />
+          <Property Name="check_out" Type="datetime" Nullable="false" />
           <Property Name="actual_wkd" Type="int" Nullable="false" />
           <Property Name="standard_salary" Type="int" Nullable="false" />
+          <Property Name="actual_salary" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -207,6 +209,56 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ammount" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_staff' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_get_staff">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="phone" />
+            <PropertyRef Name="address" />
+            <PropertyRef Name="type_staff" />
+            <PropertyRef Name="name_staff" />
+            <PropertyRef Name="status" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="phone" Type="int" Nullable="false" />
+          <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="type_staff" Type="int" Nullable="false" />
+          <Property Name="name_staff" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinema.dbo.View_get_staff_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_get_staff_info">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="phone" />
+            <PropertyRef Name="address" />
+            <PropertyRef Name="type_staff" />
+            <PropertyRef Name="name_type_staff" />
+            <PropertyRef Name="check_in" />
+            <PropertyRef Name="check_out" />
+            <PropertyRef Name="actual_wkd" />
+            <PropertyRef Name="standard_salary" />
+            <PropertyRef Name="actual_salary" />
+            <PropertyRef Name="status" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="phone" Type="int" Nullable="false" />
+          <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="type_staff" Type="int" Nullable="false" />
+          <Property Name="name_type_staff" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="check_in" Type="datetime" Nullable="false" />
+          <Property Name="check_out" Type="datetime" Nullable="false" />
+          <Property Name="actual_wkd" Type="int" Nullable="false" />
+          <Property Name="standard_salary" Type="int" Nullable="false" />
+          <Property Name="actual_salary" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="status" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_Cinema_Staff_Cinema_Type_Staff">
           <End Role="Cinema_Type_Staff" Type="Self.Cinema_Type_Staff" Multiplicity="1" />
@@ -367,6 +419,33 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
     [View_get_pop_data].[ammount] AS [ammount]
     FROM [dbo].[View_get_pop_data] AS [View_get_pop_data]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="View_get_staff" EntityType="Self.View_get_staff" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_get_staff].[id] AS [id], 
+    [View_get_staff].[name] AS [name], 
+    [View_get_staff].[phone] AS [phone], 
+    [View_get_staff].[address] AS [address], 
+    [View_get_staff].[type_staff] AS [type_staff], 
+    [View_get_staff].[name_staff] AS [name_staff], 
+    [View_get_staff].[status] AS [status]
+    FROM [dbo].[View_get_staff] AS [View_get_staff]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_get_staff_info" EntityType="Self.View_get_staff_info" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_get_staff_info].[id] AS [id], 
+    [View_get_staff_info].[name] AS [name], 
+    [View_get_staff_info].[phone] AS [phone], 
+    [View_get_staff_info].[address] AS [address], 
+    [View_get_staff_info].[type_staff] AS [type_staff], 
+    [View_get_staff_info].[name_type_staff] AS [name_type_staff], 
+    [View_get_staff_info].[check_in] AS [check_in], 
+    [View_get_staff_info].[check_out] AS [check_out], 
+    [View_get_staff_info].[actual_wkd] AS [actual_wkd], 
+    [View_get_staff_info].[standard_salary] AS [standard_salary], 
+    [View_get_staff_info].[actual_salary] AS [actual_salary], 
+    [View_get_staff_info].[status] AS [status]
+    FROM [dbo].[View_get_staff_info] AS [View_get_staff_info]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
             <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
             <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
@@ -408,6 +487,18 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cinema_Film">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_type_film" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="name_type_film" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cinema_Ticket" Relationship="Self.FK_Cinema_Ticket_Cinema_Film" FromRole="Cinema_Film" ToRole="Cinema_Ticket" />
+        </EntityType>
         <EntityType Name="Cinema_Popcorn">
           <Key>
             <PropertyRef Name="id" />
@@ -437,19 +528,6 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           <Property Name="end" Type="Time" Nullable="false" Precision="7" />
           <NavigationProperty Name="Cinema_Ticket" Relationship="Self.FK_Cinema_Ticket_Cinema_Showtime" FromRole="Cinema_Showtime" ToRole="Cinema_Ticket" />
         </EntityType>
-        <EntityType Name="Cinema_Staff">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="type_staff" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="phone" Type="Int32" Nullable="false" />
-          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Cinema_Type_Staff" Relationship="Self.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Type_Staff" />
-          <NavigationProperty Name="Cinema_Ticket" Relationship="Self.FK_Cinema_Ticket_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Ticket" />
-          <NavigationProperty Name="Cinema_WorkingPlan" Relationship="Self.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_WorkingPlan" />
-        </EntityType>
         <EntityType Name="Cinema_Ticket">
           <Key>
             <PropertyRef Name="id" />
@@ -468,12 +546,12 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           <Property Name="id_film" Type="Int32" Nullable="false" />
           <Property Name="id_nv" Type="Int32" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cinema_Film" Relationship="Self.FK_Cinema_Ticket_Cinema_Film" FromRole="Cinema_Ticket" ToRole="Cinema_Film" />
           <NavigationProperty Name="Cinema_Room" Relationship="Self.FK_Cinema_Ticket_Cinema_Room" FromRole="Cinema_Ticket" ToRole="Cinema_Room" />
           <NavigationProperty Name="Cinema_Showtime" Relationship="Self.FK_Cinema_Ticket_Cinema_Showtime" FromRole="Cinema_Ticket" ToRole="Cinema_Showtime" />
-          <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_Ticket_Cinema_Staff" FromRole="Cinema_Ticket" ToRole="Cinema_Staff" />
           <NavigationProperty Name="Cinema_TypeTick" Relationship="Self.FK_Cinema_Ticket_Cinema_TypeTick" FromRole="Cinema_Ticket" ToRole="Cinema_TypeTick" />
           <NavigationProperty Name="Cinema_User" Relationship="Self.FK_Cinema_Ticket_Cinema_User" FromRole="Cinema_Ticket" ToRole="Cinema_User" />
-          <NavigationProperty Name="Cinema_Film" Relationship="CinemaModel.FK_Cinema_Ticket_Cinema_Film" FromRole="Cinema_Ticket" ToRole="Cinema_Film" />
+          <NavigationProperty Name="Cinema_Staff" Relationship="CinemaModel.FK_Cinema_Ticket_Cinema_Staff" FromRole="Cinema_Ticket" ToRole="Cinema_Staff" />
         </EntityType>
         <EntityType Name="Cinema_TrackingLogin">
           <Key>
@@ -491,7 +569,15 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           </Key>
           <Property Name="id_type_staff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Type_Staff" ToRole="Cinema_Staff" />
+          <NavigationProperty Name="Cinema_Staff" Relationship="CinemaModel.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Type_Staff" ToRole="Cinema_Staff" />
+        </EntityType>
+        <EntityType Name="Cinema_TypeFilm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Cinema_TypeTick">
           <Key>
@@ -522,17 +608,15 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cinema_User" Relationship="Self.FK_Cinema_User_Cinema_Usertype" FromRole="Cinema_Usertype" ToRole="Cinema_User" />
         </EntityType>
-        <EntityType Name="Cinema_WorkingPlan">
+        <EntityType Name="sysdiagram">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_nv" Type="Int32" Nullable="false" />
-          <Property Name="check_in" Type="Int32" Nullable="false" />
-          <Property Name="check_out" Type="Int32" Nullable="false" />
-          <Property Name="actual_wkd" Type="Int32" Nullable="false" />
-          <Property Name="standard_salary" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cinema_Staff" Relationship="Self.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_WorkingPlan" ToRole="Cinema_Staff" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="get_ticket">
           <Key>
@@ -565,6 +649,46 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           <Property Name="id_nv" Type="Int32" Nullable="false" />
           <Property Name="ST_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="View_get_film_data">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="id_type_film" />
+            <PropertyRef Name="name_type_film" />
+            <PropertyRef Name="created_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_type_film" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_type_film" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="View_get_pop_data">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="ammount" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ammount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cinema_Ticket_Cinema_Film">
+          <End Role="Cinema_Film" Type="Self.Cinema_Film" Multiplicity="1" />
+          <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Film">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_Ticket">
+              <PropertyRef Name="id_film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cinema_Ticket_Cinema_Room">
           <End Role="Cinema_Room" Type="Self.Cinema_Room" Multiplicity="1" />
           <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
@@ -586,42 +710,6 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
             </Principal>
             <Dependent Role="Cinema_Ticket">
               <PropertyRef Name="id_sc" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cinema_Staff_Cinema_Type_Staff">
-          <End Role="Cinema_Type_Staff" Type="Self.Cinema_Type_Staff" Multiplicity="1" />
-          <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cinema_Type_Staff">
-              <PropertyRef Name="id_type_staff" />
-            </Principal>
-            <Dependent Role="Cinema_Staff">
-              <PropertyRef Name="type_staff" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cinema_Ticket_Cinema_Staff">
-          <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="1" />
-          <End Role="Cinema_Ticket" Type="Self.Cinema_Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cinema_Staff">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Cinema_Ticket">
-              <PropertyRef Name="id_nv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cinema_WorkingPlan_Cinema_Staff">
-          <End Role="Cinema_Staff" Type="Self.Cinema_Staff" Multiplicity="1" />
-          <End Role="Cinema_WorkingPlan" Type="Self.Cinema_WorkingPlan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cinema_Staff">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Cinema_WorkingPlan">
-              <PropertyRef Name="id_nv" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -662,18 +750,25 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CinemaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cinema_Film" EntityType="Self.Cinema_Film" />
           <EntitySet Name="Cinema_Popcorn" EntityType="Self.Cinema_Popcorn" />
           <EntitySet Name="Cinema_Room" EntityType="Self.Cinema_Room" />
           <EntitySet Name="Cinema_Showtime" EntityType="Self.Cinema_Showtime" />
-          <EntitySet Name="Cinema_Staff" EntityType="Self.Cinema_Staff" />
           <EntitySet Name="Cinema_Ticket" EntityType="Self.Cinema_Ticket" />
           <EntitySet Name="Cinema_TrackingLogin" EntityType="Self.Cinema_TrackingLogin" />
           <EntitySet Name="Cinema_Type_Staff" EntityType="Self.Cinema_Type_Staff" />
+          <EntitySet Name="Cinema_TypeFilm" EntityType="Self.Cinema_TypeFilm" />
           <EntitySet Name="Cinema_TypeTick" EntityType="Self.Cinema_TypeTick" />
           <EntitySet Name="Cinema_User" EntityType="Self.Cinema_User" />
           <EntitySet Name="Cinema_Usertype" EntityType="Self.Cinema_Usertype" />
-          <EntitySet Name="Cinema_WorkingPlan" EntityType="Self.Cinema_WorkingPlan" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="get_ticket" EntityType="Self.get_ticket" />
+          <EntitySet Name="View_get_film_data" EntityType="Self.View_get_film_data" />
+          <EntitySet Name="View_get_pop_data" EntityType="Self.View_get_pop_data" />
+          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Film" Association="Self.FK_Cinema_Ticket_Cinema_Film">
+            <End Role="Cinema_Film" EntitySet="Cinema_Film" />
+            <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_Room" Association="Self.FK_Cinema_Ticket_Cinema_Room">
             <End Role="Cinema_Room" EntitySet="Cinema_Room" />
             <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
@@ -681,18 +776,6 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_Showtime" Association="Self.FK_Cinema_Ticket_Cinema_Showtime">
             <End Role="Cinema_Showtime" EntitySet="Cinema_Showtime" />
             <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="Self.FK_Cinema_Staff_Cinema_Type_Staff">
-            <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
-            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Staff" Association="Self.FK_Cinema_Ticket_Cinema_Staff">
-            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
-            <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cinema_WorkingPlan_Cinema_Staff" Association="Self.FK_Cinema_WorkingPlan_Cinema_Staff">
-            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
-            <End Role="Cinema_WorkingPlan" EntitySet="Cinema_WorkingPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_Ticket_Cinema_TypeTick" Association="Self.FK_Cinema_Ticket_Cinema_TypeTick">
             <End Role="Cinema_TypeTick" EntitySet="Cinema_TypeTick" />
@@ -706,85 +789,131 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
             <End Role="Cinema_Usertype" EntitySet="Cinema_Usertype" />
             <End Role="Cinema_User" EntitySet="Cinema_User" />
           </AssociationSet>
-          <EntitySet Name="Cinema_Film" EntityType="CinemaModel.Cinema_Film" />
-          <EntitySet Name="View_get_film_data" EntityType="CinemaModel.View_get_film_data" />
-          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Film" Association="CinemaModel.FK_Cinema_Ticket_Cinema_Film">
-            <End Role="Cinema_Film" EntitySet="Cinema_Film" />
+          <EntitySet Name="Cinema_WorkingPlan" EntityType="CinemaModel.Cinema_WorkingPlan" />
+          <EntitySet Name="Cinema_Staff" EntityType="CinemaModel.Cinema_Staff" />
+          <EntitySet Name="View_get_staff_info" EntityType="CinemaModel.View_get_staff_info" />
+          <AssociationSet Name="FK_Cinema_Staff_Cinema_Type_Staff" Association="CinemaModel.FK_Cinema_Staff_Cinema_Type_Staff">
+            <End Role="Cinema_Type_Staff" EntitySet="Cinema_Type_Staff" />
+            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cinema_Ticket_Cinema_Staff" Association="CinemaModel.FK_Cinema_Ticket_Cinema_Staff">
+            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
             <End Role="Cinema_Ticket" EntitySet="Cinema_Ticket" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="CinemaModel.sysdiagram" />
-          <EntitySet Name="Cinema_TypeFilm" EntityType="CinemaModel.Cinema_TypeFilm" />
-          <EntitySet Name="View_get_pop_data" EntityType="CinemaModel.View_get_pop_data" />
+          <AssociationSet Name="FK_Cinema_WorkingPlan_Cinema_Staff" Association="CinemaModel.FK_Cinema_WorkingPlan_Cinema_Staff">
+            <End Role="Cinema_Staff" EntitySet="Cinema_Staff" />
+            <End Role="Cinema_WorkingPlan" EntitySet="Cinema_WorkingPlan" />
+          </AssociationSet>
+          <EntitySet Name="View_get_staff" EntityType="CinemaModel.View_get_staff" />
         </EntityContainer>
-        <EntityType Name="Cinema_Film">
+        <EntityType Name="Cinema_WorkingPlan">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="id_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="name_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cinema_Ticket" Relationship="CinemaModel.FK_Cinema_Ticket_Cinema_Film" FromRole="Cinema_Film" ToRole="Cinema_Ticket" />
+          <Property Name="id_nv" Type="Int32" Nullable="false" />
+          <Property Name="check_in" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="check_out" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actual_wkd" Type="Int32" Nullable="false" />
+          <Property Name="standard_salary" Type="Int32" Nullable="false" />
+          <Property Name="actual_salary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cinema_Staff" Relationship="CinemaModel.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_WorkingPlan" ToRole="Cinema_Staff" />
         </EntityType>
-        <EntityType Name="View_get_film_data">
+        <EntityType Name="Cinema_Staff">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_staff" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cinema_Type_Staff" Relationship="CinemaModel.FK_Cinema_Staff_Cinema_Type_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Type_Staff" />
+          <NavigationProperty Name="Cinema_Ticket" Relationship="CinemaModel.FK_Cinema_Ticket_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_Ticket" />
+          <NavigationProperty Name="Cinema_WorkingPlan" Relationship="CinemaModel.FK_Cinema_WorkingPlan_Cinema_Staff" FromRole="Cinema_Staff" ToRole="Cinema_WorkingPlan" />
+        </EntityType>
+        <EntityType Name="View_get_staff_info">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="name" />
-            <PropertyRef Name="description" />
-            <PropertyRef Name="id_type_film" />
-            <PropertyRef Name="name_type_film" />
-            <PropertyRef Name="created_date" />
+            <PropertyRef Name="phone" />
+            <PropertyRef Name="address" />
+            <PropertyRef Name="type_staff" />
+            <PropertyRef Name="name_type_staff" />
+            <PropertyRef Name="check_in" />
+            <PropertyRef Name="check_out" />
+            <PropertyRef Name="actual_wkd" />
+            <PropertyRef Name="standard_salary" />
+            <PropertyRef Name="actual_salary" />
+            <PropertyRef Name="status" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="id_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="name_type_film" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type_staff" Type="Int32" Nullable="false" />
+          <Property Name="name_type_staff" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="check_in" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="check_out" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actual_wkd" Type="Int32" Nullable="false" />
+          <Property Name="standard_salary" Type="Int32" Nullable="false" />
+          <Property Name="actual_salary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_Cinema_Ticket_Cinema_Film">
-          <End Type="CinemaModel.Cinema_Film" Role="Cinema_Film" Multiplicity="1" />
-          <End Type="CinemaModel.Cinema_Ticket" Role="Cinema_Ticket" Multiplicity="*" />
+        <Association Name="FK_Cinema_Staff_Cinema_Type_Staff">
+          <End Type="CinemaModel.Cinema_Type_Staff" Role="Cinema_Type_Staff" Multiplicity="1" />
+          <End Type="CinemaModel.Cinema_Staff" Role="Cinema_Staff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cinema_Film">
-              <PropertyRef Name="id" />
+            <Principal Role="Cinema_Type_Staff">
+              <PropertyRef Name="id_type_staff" />
             </Principal>
-            <Dependent Role="Cinema_Ticket">
-              <PropertyRef Name="id_film" />
+            <Dependent Role="Cinema_Staff">
+              <PropertyRef Name="type_staff" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Cinema_TypeFilm">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="View_get_pop_data">
+        <Association Name="FK_Cinema_Ticket_Cinema_Staff">
+          <End Type="CinemaModel.Cinema_Staff" Role="Cinema_Staff" Multiplicity="1" />
+          <End Type="CinemaModel.Cinema_Ticket" Role="Cinema_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_Ticket">
+              <PropertyRef Name="id_nv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cinema_WorkingPlan_Cinema_Staff">
+          <End Type="CinemaModel.Cinema_Staff" Role="Cinema_Staff" Multiplicity="1" />
+          <End Type="CinemaModel.Cinema_WorkingPlan" Role="Cinema_WorkingPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema_Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cinema_WorkingPlan">
+              <PropertyRef Name="id_nv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="View_get_staff">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="name" />
-            <PropertyRef Name="description" />
-            <PropertyRef Name="ammount" />
+            <PropertyRef Name="phone" />
+            <PropertyRef Name="address" />
+            <PropertyRef Name="type_staff" />
+            <PropertyRef Name="name_staff" />
+            <PropertyRef Name="status" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ammount" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type_staff" Type="Int32" Nullable="false" />
+          <Property Name="name_staff" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -792,6 +921,18 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CinemaModelStoreContainer" CdmEntityContainer="CinemaEntities">
+          <EntitySetMapping Name="Cinema_Film">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_Film">
+              <MappingFragment StoreEntitySet="Cinema_Film">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id_type_film" ColumnName="id_type_film" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="name_type_film" ColumnName="name_type_film" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cinema_Popcorn">
             <EntityTypeMapping TypeName="CinemaModel.Cinema_Popcorn">
               <MappingFragment StoreEntitySet="Cinema_Popcorn">
@@ -819,17 +960,6 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="start" ColumnName="start" />
                 <ScalarProperty Name="end" ColumnName="end" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cinema_Staff">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_Staff">
-              <MappingFragment StoreEntitySet="Cinema_Staff">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="type_staff" ColumnName="type_staff" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="address" ColumnName="address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -866,6 +996,15 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Cinema_TypeFilm">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_TypeFilm">
+              <MappingFragment StoreEntitySet="Cinema_TypeFilm">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cinema_TypeTick">
             <EntityTypeMapping TypeName="CinemaModel.Cinema_TypeTick">
               <MappingFragment StoreEntitySet="Cinema_TypeTick">
@@ -894,15 +1033,14 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cinema_WorkingPlan">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_WorkingPlan">
-              <MappingFragment StoreEntitySet="Cinema_WorkingPlan">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_nv" ColumnName="id_nv" />
-                <ScalarProperty Name="check_in" ColumnName="check_in" />
-                <ScalarProperty Name="check_out" ColumnName="check_out" />
-                <ScalarProperty Name="actual_wkd" ColumnName="actual_wkd" />
-                <ScalarProperty Name="standard_salary" ColumnName="standard_salary" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CinemaModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -926,55 +1064,79 @@ warning 6002: The table/view 'Cinema.dbo.View_get_pop_data' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cinema_Film">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_Film">
-              <MappingFragment StoreEntitySet="Cinema_Film">
-                <ScalarProperty Name="name_type_film" ColumnName="name_type_film" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="id_type_film" ColumnName="id_type_film" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="View_get_film_data">
             <EntityTypeMapping TypeName="CinemaModel.View_get_film_data">
               <MappingFragment StoreEntitySet="View_get_film_data">
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="name_type_film" ColumnName="name_type_film" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="id_type_film" ColumnName="id_type_film" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CinemaModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cinema_TypeFilm">
-            <EntityTypeMapping TypeName="CinemaModel.Cinema_TypeFilm">
-              <MappingFragment StoreEntitySet="Cinema_TypeFilm">
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name_type_film" ColumnName="name_type_film" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="View_get_pop_data">
             <EntityTypeMapping TypeName="CinemaModel.View_get_pop_data">
               <MappingFragment StoreEntitySet="View_get_pop_data">
-                <ScalarProperty Name="ammount" ColumnName="ammount" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="ammount" ColumnName="ammount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cinema_WorkingPlan">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_WorkingPlan">
+              <MappingFragment StoreEntitySet="Cinema_WorkingPlan">
+                <ScalarProperty Name="actual_salary" ColumnName="actual_salary" />
+                <ScalarProperty Name="standard_salary" ColumnName="standard_salary" />
+                <ScalarProperty Name="actual_wkd" ColumnName="actual_wkd" />
+                <ScalarProperty Name="check_out" ColumnName="check_out" />
+                <ScalarProperty Name="check_in" ColumnName="check_in" />
+                <ScalarProperty Name="id_nv" ColumnName="id_nv" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cinema_Staff">
+            <EntityTypeMapping TypeName="CinemaModel.Cinema_Staff">
+              <MappingFragment StoreEntitySet="Cinema_Staff">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type_staff" ColumnName="type_staff" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_get_staff_info">
+            <EntityTypeMapping TypeName="CinemaModel.View_get_staff_info">
+              <MappingFragment StoreEntitySet="View_get_staff_info">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="actual_salary" ColumnName="actual_salary" />
+                <ScalarProperty Name="standard_salary" ColumnName="standard_salary" />
+                <ScalarProperty Name="actual_wkd" ColumnName="actual_wkd" />
+                <ScalarProperty Name="check_out" ColumnName="check_out" />
+                <ScalarProperty Name="check_in" ColumnName="check_in" />
+                <ScalarProperty Name="name_type_staff" ColumnName="name_type_staff" />
+                <ScalarProperty Name="type_staff" ColumnName="type_staff" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_get_staff">
+            <EntityTypeMapping TypeName="CinemaModel.View_get_staff">
+              <MappingFragment StoreEntitySet="View_get_staff">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="name_staff" ColumnName="name_staff" />
+                <ScalarProperty Name="type_staff" ColumnName="type_staff" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
